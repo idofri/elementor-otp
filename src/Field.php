@@ -7,12 +7,40 @@ use ElementorPro\Modules\Forms\Fields\Tel;
 
 class Field extends Tel {
     
+    public $depended_scripts = [
+        'featherlight'
+    ];
+
+    public $depended_styles = [
+        'featherlight'
+    ];
+
     public function get_type() {
         return 'otp';
     }
 
     public function get_name() {
         return __( 'OTP', 'elementor-otp' );
+    }
+    
+    public function render( $item, $item_index, $form ) {
+        $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
+        parent::render( $item, $item_index, $form );
+
+        $form->set_render_attribute( 'otp-container' . $item_index, 'class', 'elementor-hidden' );
+        $form->set_render_attribute( 'otp-container' . $item_index, 'id', 'otp-container[' . $item['_id'] . ']' );
+        ?><div <?php echo $form->get_render_attribute_string( 'otp-container' . $item_index ); ?>>
+            <?php
+            $form->set_render_attribute( 'otp' . $item_index, 'type', 'tel' );
+            $form->set_render_attribute( 'otp' . $item_index, 'id', 'otp[' . $item['_id'] . ']' );
+            echo '<input size="1" ' . $form->get_render_attribute_string( 'otp' . $item_index ) . '>'; 
+            ?>
+            <button type="submit" <?php echo $form->get_render_attribute_string( 'button' ); ?>>
+                <span <?php echo $form->get_render_attribute_string( 'content-wrapper' ); ?>>
+                    <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>
+                </span>
+            </button>
+        </div><?php
     }
     
     public function update_controls( $widget ) {
