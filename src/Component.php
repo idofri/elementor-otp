@@ -5,10 +5,11 @@ use Elementor\Controls_Manager;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\Forms\Fields\Tel;
 
-class Field extends Tel {
+class Component extends Tel {
     
     public $depended_scripts = [
-        'featherlight'
+        'featherlight',
+        'elementor-otp'
     ];
 
     public $depended_styles = [
@@ -26,20 +27,20 @@ class Field extends Tel {
     public function render( $item, $item_index, $form ) {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
         parent::render( $item, $item_index, $form );
-
-        $form->set_render_attribute( 'otp-container' . $item_index, 'class', 'elementor-hidden' );
-        $form->set_render_attribute( 'otp-container' . $item_index, 'id', 'otp-container[' . $item['_id'] . ']' );
-        ?><div <?php echo $form->get_render_attribute_string( 'otp-container' . $item_index ); ?>>
-            <?php
-            $form->set_render_attribute( 'otp' . $item_index, 'type', 'tel' );
-            $form->set_render_attribute( 'otp' . $item_index, 'id', 'otp[' . $item['_id'] . ']' );
-            echo '<input size="1" ' . $form->get_render_attribute_string( 'otp' . $item_index ) . '>'; 
-            ?>
-            <button type="submit" <?php echo $form->get_render_attribute_string( 'button' ); ?>>
-                <span <?php echo $form->get_render_attribute_string( 'content-wrapper' ); ?>>
-                    <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>
-                </span>
-            </button>
+        
+        ?><div class="elementor-hidden elementor-otp">
+            <div class="elementor-form-fields-wrapper">
+                <div class="elementor-column elementor-col-50">
+                    <input size="4" type="tel" class="elementor-field elementor-size-sm">
+                </div>
+                <div class="elementor-column elementor-col-50">
+                    <button type="button" class="elementor-button elementor-size-sm">
+                        <span>
+                            <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
         </div><?php
     }
     
@@ -52,7 +53,11 @@ class Field extends Tel {
             return;
         }
         
-        $field_controls = [
+        // Placeholder
+        $placeholder = $control_data['fields']['placeholder'];
+        $placeholder['conditions']['terms'][0]['value'][] = $this->get_type();
+        
+        $field_controls = [ 
             'otp_vendor' => [
                 'name' => 'otp_vendor',
                 'label' => __( 'Vendor', 'elementor-otp' ),
@@ -67,9 +72,10 @@ class Field extends Tel {
                 'tab' => 'content',
                 'inner_tab' => 'form_fields_content_tab',
                 'tabs_wrapper' => 'form_fields_tabs',
-            ]
+            ],
+            'placeholder' => $placeholder
         ];
-
+        
         $control_data['fields'] = $this->inject_field_controls( $control_data['fields'], $field_controls );
         $widget->update_control( 'form_fields', $control_data );
     }
