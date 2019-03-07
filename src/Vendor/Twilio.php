@@ -2,30 +2,38 @@
 namespace Elementor\OTP\Vendor;
 
 use Authy\AuthyApi;
-use WP_Error;
 
 class Twilio extends Base {
     
-    public function start( WP_Error $errors ) {
-        $authyApi = new AuthyApi( 'api_key' );
-        $res = $authyApi->phoneVerificationStart( 'phone', 'country', 'method' );
+    protected function getApiKey() {
+        return 'RL77DnnPWt1btKD8KXRI3SIlrIoCPPzW';
+    }
+
+    public function send( $phone_number, $country_code, $via = 'sms', $code_length = 4, $locale = null ) {
+        $authyApi = new AuthyApi( $this->getApiKey() );
+        $res = $authyApi->phoneVerificationStart( $phone_number, $country_code, $via );
 
         if ( $res->ok() ) {
             return $res->bodyvar('uuid');
         }
         
-        $errors->add( 'authy_error',  __( sprintf( '<strong>ERROR</strong>: %s',  $res->errors()->message ), 'elementor-otp' ) );
+        $this->errors->add( 'authy_error',
+            __( sprintf( '<strong>ERROR</strong>: %s', $res->errors()->message ), 'elementor-otp' )
+        );
         return false;
     }
     
-    public function verify() {
-        $authyApi = new AuthyApi( 'api_key' );
-        $res = $authyApi->phoneVerificationCheck( 'phone', 'country', 'code' );
+    public function verify( $phone_number, $country_code, $verification_code ) {
+        $authyApi = new AuthyApi( $this->getApiKey() );
+        $res = $authyApi->phoneVerificationCheck( $phone_number, $country_code, $verification_code );
 
         if ( $res->ok() ) {
             return true;
         }
 
+        $this->errors->add( 'authy_error',
+            __( sprintf( '<strong>ERROR</strong>: %s', $res->errors()->message ), 'elementor-otp' )
+        );
         return false;
     }
     

@@ -36,6 +36,7 @@ class ElementorOTP {
     
     public function registerStyles() {
         wp_register_style( 'featherlight', plugins_url( '/assets/lib/featherlight/featherlight.css', __FILE__ ), [], '1.7.13' );
+        wp_register_style( 'elementor-otp', plugins_url( '/assets/css/otp.css', __FILE__ ), [], $this->version );
     }
 
     public function registerScripts() {
@@ -48,30 +49,64 @@ class ElementorOTP {
     }
 
     public function addOtpComponent() {
-        Plugin::instance()->modules_manager->get_modules( 'forms' )->add_component( $this->getComponent()->get_name(), $this->getComponent() );
+        Plugin::instance()
+            ->modules_manager
+            ->get_modules( 'forms' )
+            ->add_component( $this->getComponent()->get_name(), $this->getComponent() );
     }
     
-    public function hasOtpFieldType( Form_Record $record ) {
+    public function getOtpComponent( Form_Record $record ) {
         $fields = $record->get( 'fields' );
         $type = $this->getComponent()->get_type();
         
         foreach ( $fields as $field ) {
             if ( $type === $field['type'] ) {
-                return true;
+                return $field;
             }
         }
 
         return false;
-    }    
+    }
+
+    public function getOtpVendor( Form_Record $record ) {
+        $fields = $record->get_form_settings( 'form_fields' );
+        $type = $this->getComponent()->get_type();
+
+        foreach ( $fields as $field ) {
+            if ( $type === $field['field_type'] ) {
+                $className = ucfirst( $field['otp_vendor'] );
+                $className = 'Elementor\OTP\Vendor\' . $className;
+                return new $className();
+            }
+        }
+
+        return false;
+    }
     
     public function otpValidation( $record, $ajax_handler ) {
-        if ( ! $ajax_handler->is_success || ! $this->hasOtpFieldType( $record ) ) {
+        // Form has errors
+        if ( ! $ajax_handler->is_success ) {
             return;
         }
         
-        $message = 'otp';
-        $ajax_handler->add_error_message( $message )->send();
+        // No OTP component
+        $component = $this->getOtpComponent( $record );
+        if ( ! $component ) {
+            return;
+        }
+
+        // Vendor
+        $vendor = $this->getOtpVendor( $record );
+        echo '<pre>';
+        print_r($vendor);
         exit;
+
+        $errorMessage = __( 'Verification code is incorrect.', 'elementor-otp' );
+        wp_send_json_error( [
+            'message' => $errorMessage,
+            'errors'  => [],
+            'data'    => []
+        ] );
     }
     
 }

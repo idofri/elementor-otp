@@ -13,7 +13,8 @@ class Component extends Tel {
     ];
 
     public $depended_styles = [
-        'featherlight'
+        'featherlight',
+        'elementor-otp'
     ];
 
     public function get_type() {
@@ -27,20 +28,14 @@ class Component extends Tel {
     public function render( $item, $item_index, $form ) {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
         parent::render( $item, $item_index, $form );
-        
+
         ?><div class="elementor-hidden elementor-otp">
-            <div class="elementor-form-fields-wrapper">
-                <div class="elementor-column elementor-col-50">
-                    <input size="4" type="tel" class="elementor-field elementor-size-sm">
-                </div>
-                <div class="elementor-column elementor-col-50">
-                    <button type="button" class="elementor-button elementor-size-sm">
-                        <span>
-                            <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>
-                        </span>
-                    </button>
-                </div>
-            </div>
+            <input size="4" type="tel" class="elementor-field elementor-size-sm">
+            <button type="button" class="elementor-button elementor-size-sm">
+                <span>
+                    <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>
+                </span>
+            </button>
         </div><?php
     }
     
