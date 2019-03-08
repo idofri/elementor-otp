@@ -75,7 +75,7 @@ class ElementorOTP {
         foreach ( $fields as $field ) {
             if ( $type === $field['field_type'] ) {
                 $className = ucfirst( $field['otp_vendor'] );
-                $className = 'Elementor\OTP\Vendor\' . $className;
+                $className = "Elementor\\OTP\\Vendor\\{$className}";
                 return new $className();
             }
         }
@@ -89,7 +89,7 @@ class ElementorOTP {
             return;
         }
         
-        // No OTP component
+        // Component
         $component = $this->getOtpComponent( $record );
         if ( ! $component ) {
             return;
@@ -97,9 +97,9 @@ class ElementorOTP {
 
         // Vendor
         $vendor = $this->getOtpVendor( $record );
-        echo '<pre>';
-        print_r($vendor);
-        exit;
+        if ( ! $vendor ) {
+            return;
+        }
 
         $errorMessage = __( 'Verification code is incorrect.', 'elementor-otp' );
         wp_send_json_error( [

@@ -7,20 +7,10 @@ jQuery( function( $ ) {
             return;
         }
         
-        var otpInitialized = false;
-
         $form.ajaxSuccess(function( event, xhr, settings ) {
-            otpInitialized = true;
-            // console.log(event);
             console.log(xhr.responseJSON);
-            // console.log(settings);
         } );
-
-        alert(initialized);
-
-        // console.log($form);
-        // console.log(event);
-
+        
         var $content = $form.find( '.elementor-otp' );
         $.featherlight( $content, {
             root: $form,
