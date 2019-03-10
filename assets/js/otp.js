@@ -16,10 +16,9 @@ jQuery( function( $ ) {
             root: $form,
             otherClose: '.elementor-button',
             afterClose: function( event ) {
-                if ( $( event.target ).hasClass( 'featherlight-close' ) ) {
-                    return;
+                if ( $( event.target ).hasClass( 'elementor-button' ) ) {
+                    $form.trigger( 'submit' );
                 }
-                $form.trigger( 'submit' );
             }
         } );
         

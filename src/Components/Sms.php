@@ -32,9 +32,7 @@ class Sms extends Tel {
         ?><div class="elementor-hidden elementor-otp">
             <input size="6" type="tel" class="elementor-field elementor-field-textual elementor-size-sm">
             <button type="button" class="elementor-button elementor-size-sm">
-                <span>
-                    <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>
-                </span>
+                <?php _e( 'Verify', 'elementor-otp' ); ?>
             </button>
         </div><?php
     }
