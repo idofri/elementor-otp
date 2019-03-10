@@ -1,11 +1,11 @@
 <?php
-namespace Elementor\OTP;
+namespace Elementor\OTP\Components;
 
 use Elementor\Controls_Manager;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\Forms\Fields\Tel;
 
-class Component extends Tel {
+class Sms extends Tel {
     
     public $depended_scripts = [
         'featherlight',
@@ -30,7 +30,7 @@ class Component extends Tel {
         parent::render( $item, $item_index, $form );
 
         ?><div class="elementor-hidden elementor-otp">
-            <input size="4" type="tel" class="elementor-field elementor-size-sm">
+            <input size="6" type="tel" class="elementor-field elementor-field-textual elementor-size-sm">
             <button type="button" class="elementor-button elementor-size-sm">
                 <span>
                     <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>

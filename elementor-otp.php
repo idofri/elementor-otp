@@ -21,7 +21,7 @@ class ElementorOTP {
     
     public static function getComponent() {
         if ( is_null( self::$_component ) ) {
-            self::$_component = new Elementor\OTP\Component();
+            self::$_component = new Elementor\OTP\Components\Sms();
         }
         return self::$_component;
     }

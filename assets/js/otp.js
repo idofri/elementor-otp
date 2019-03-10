@@ -8,14 +8,17 @@ jQuery( function( $ ) {
         }
         
         $form.ajaxSuccess(function( event, xhr, settings ) {
-            console.log(xhr.responseJSON);
+            // console.log(xhr.responseJSON);
         } );
         
         var $content = $form.find( '.elementor-otp' );
         $.featherlight( $content, {
             root: $form,
             otherClose: '.elementor-button',
-            afterClose: function() {
+            afterClose: function( event ) {
+                if ( $( event.target ).hasClass( 'featherlight-close' ) ) {
+                    return;
+                }
                 $form.trigger( 'submit' );
             }
         } );
