@@ -14,10 +14,18 @@ jQuery( function( $ ) {
             return;
         }
         
+        var otpEnabledForm = false;
         $form.ajaxSuccess(function( event, xhr, settings ) {
-            // console.log(xhr.responseJSON);
+            if ( xhr.responseJSON.data.otp ) {
+                otpEnabledForm = true;
+            }
         } );
         
+        // OTP not present
+        if ( otpEnabledForm ) {
+            return;
+        }
+
         var $content = $form.find( '.elementor-otp' );
         $.featherlight( $content, {
             root: $form,

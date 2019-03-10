@@ -105,7 +105,8 @@ class ElementorOTP {
         wp_send_json_error( [
             'message' => $errorMessage,
             'errors'  => [],
-            'data'    => []
+            'data'    => [],
+            'otp'     => true
         ] );
     }
     
