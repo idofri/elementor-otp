@@ -30,10 +30,9 @@ class Sms extends Tel {
         parent::render( $item, $item_index, $form );
 
         ?><div class="elementor-hidden elementor-otp">
+            <label class="elementor-align-center"><?php _e( 'hi', 'elementor-otp' ); ?></label>
             <input size="6" type="tel" class="elementor-field elementor-field-textual elementor-size-sm">
-            <button type="button" class="elementor-button elementor-size-sm">
-                <?php _e( 'Verify', 'elementor-otp' ); ?>
-            </button>
+            <button type="button" class="elementor-button elementor-size-sm"><?php _e( 'Verify', 'elementor-otp' ); ?></button>
         </div><?php
     }
     

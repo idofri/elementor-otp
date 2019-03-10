@@ -101,7 +101,7 @@ class ElementorOTP {
             return;
         }
 
-        $errorMessage = __( 'Verification code is incorrect.', 'elementor-otp' );
+        $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
         wp_send_json_error( [
             'message' => $errorMessage,
             'errors'  => [],
