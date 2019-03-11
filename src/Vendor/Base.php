@@ -7,9 +7,9 @@ abstract class Base {
     
     protected $errors;
 
-    abstract public function send( $phone_number );
+    abstract public function send( $recipient );
     
-    abstract public function verify( $phone_number, $verification_code );
+    abstract public function verify( $recipient, $verification_code );
 
     public function hasErrors() {
         return $this->errors->has_errors();

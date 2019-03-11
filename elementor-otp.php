@@ -100,6 +100,11 @@ class ElementorOTP {
         if ( ! $vendor ) {
             return;
         }
+        
+        echo '<pre>';
+        print_r($_POST);
+        print_r($vendor);
+        exit;
 
         $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
         wp_send_json_error( [
