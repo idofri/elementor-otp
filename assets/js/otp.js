@@ -12,16 +12,16 @@ jQuery( function( $ ) {
             root: '.elementor-2',
             closeIcon: '',
             otherClose: '.elementor-button',
-            afterOpen: function( event ) {
-                console.log(event);
-                $( event.target ).siblings( 'input' ).prop( 'required', true );
-            },
+            // afterOpen: function( event ) {
+            //     console.log(event);
+            //     $( event.target ).siblings( 'input' ).prop( 'required', true );
+            // },
             afterClose: function( event ) {
                 if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {
                     return;
                 }
                 
-                var $code = $( event.target ).siblings( 'input' );
+                var $code = $( event.target ).parentsUntil( '.featherlight-content' ).find( '[type="tel"]' );
                 if ( $( '#code' ).length ) {
                     $( '#code' ).val( $code.val() );
                 } else {

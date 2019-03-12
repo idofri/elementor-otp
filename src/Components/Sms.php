@@ -40,9 +40,7 @@ class Sms extends Tel {
             </div>
             <div class="elementor-field-group elementor-field-type-submit elementor-column elementor-col-100">
                 <button type="button" class="elementor-button elementor-size-sm">
-                    <span>
-                        <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>
-                    </span>
+                    <?php _e( 'Verify', 'elementor-otp' ); ?>
                 </button>
             </div>
         </div><?php
