@@ -31,10 +31,20 @@ class Sms extends Tel {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
         parent::render( $item, $item_index, $form );
 
-        ?><div class="elementor-hidden elementor-otp">
-            <label class="elementor-align-center"><?php _e( '&nbsp;', 'elementor-otp' ); ?></label>
-            <input size="6" type="tel" class="elementor-field elementor-field-textual elementor-size-sm">
-            <button type="button" class="elementor-button elementor-size-sm"><?php _e( 'Verify', 'elementor-otp' ); ?></button>
+        ?><div class="elementor-element elementor-element-<?= $form->get_id(); ?> elementor-widget-form elementor-button-align-stretch elementor-hidden elementor-otp">
+            <div class="elementor-field-group">
+                <label class="elementor-align-center">
+                    <?php _e( 'Please type the verification code sent to you.', 'elementor-otp' ); ?>
+                </label>
+                <input size="4" type="tel" class="elementor-field elementor-field-textual elementor-size-sm elementor-align-center">
+            </div>
+            <div class="elementor-field-group elementor-field-type-submit elementor-column elementor-col-100">
+                <button type="button" class="elementor-button elementor-size-sm">
+                    <span>
+                        <span class="elementor-button-text"><?php _e( 'Verify', 'elementor-otp' ); ?></span>
+                    </span>
+                </button>
+            </div>
         </div><?php
     }
     

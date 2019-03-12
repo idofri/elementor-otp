@@ -7,7 +7,7 @@ class Twilio extends Base {
     
     // @temp
     protected function getApiKey() {
-        return 'WGS4CtGydhfi7P955plhsg1Ao3M2oapK';
+        return '3L7FkoZm55N5Zi25iDbifOHt8odAlQNt';
     }
 
     public function send( $phone_number ) {
@@ -24,7 +24,9 @@ class Twilio extends Base {
             return true;
         }
         
-        self::$errors->add( 'authy_error', __( $res->errors()->message, 'elementor-otp' ) );
+        $errorCode = $res->bodyvar( 'error_code' );
+        $errorMessage = $res->bodyvar( 'message' );
+        self::$errors->add( $errorCode, __( $errorMessage, 'elementor-otp' ) );
         return false;
     }
     

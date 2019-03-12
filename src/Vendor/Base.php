@@ -17,7 +17,7 @@ abstract class Base {
     
     public function getErrorMessage() {
         $errorMessages = self::$errors->get_error_messages();
-        return $errorMessages[0];
+        return reset( $errorMessages );
     }
 
     public function __construct() {

@@ -1,3 +1,6 @@
 .featherlight {
     background: rgba(0, 0, 0, 0.8);
 }
+.featherlight .elementor-field-type-submit {
+    margin-bottom: 0 !important;
+}

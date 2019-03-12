@@ -107,12 +107,12 @@ class ElementorOTP {
         }
         
         // @todo: move logic else-where
-        $openVerificationPopup = true;
+        $openVerificationBox = true;
         
         if ( empty( $_POST['code'] ) ) {
             $vendor->send( $component['value'] );
             if ( $vendor->hasErrors() ) {
-                $openVerificationPopup = false;
+                $openVerificationBox = false;
                 $errorMessage = $vendor->getErrorMessage();
             } else {
                 $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
@@ -131,7 +131,7 @@ class ElementorOTP {
             'message' => $errorMessage,
             'errors'  => [],
             'data'    => [],
-            'otp'     => $openVerificationPopup
+            'otp'     => $openVerificationBox
         ] );
     }
     

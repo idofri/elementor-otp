@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-03-12 14:26+0200\n"
+"POT-Creation-Date: 2019-03-12 20:38+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,24 +20,20 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 1.8.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: elementor-otp.php:110
+#: elementor-otp.php:118
 msgid "Awaiting verification."
 msgstr "ממתין לאימות."
-
-#: elementor-otp.php:112
-msgid "Verification code is incorrect."
-msgstr "קוד האימות שגוי."
 
 #: src/Components/Sms.php:27
 msgid "OTP"
 msgstr "OTP"
 
 #: src/Components/Sms.php:35
-msgid "&nbsp;"
-msgstr ""
+msgid "Please type the verification code sent to you."
+msgstr "הזן את קוד האימות שנשלח אליך."
 
 #: src/Components/Sms.php:37
 msgid "Verify"
@@ -51,6 +47,9 @@ msgstr "ספק"
 msgid "Twilio"
 msgstr "Twilio"
 
+#~ msgid "Verification code is incorrect."
+#~ msgstr "קוד האימות שגוי."
+
 #~ msgid "Verification completed successfully."
 #~ msgstr "האימות הושלם בהצלחה."
 
@@ -62,9 +61,6 @@ msgstr "Twilio"
 
 #~ msgid "Phone Verification"
 #~ msgstr "אימות טלפון"
-
-#~ msgid "Please type the verification code sent to you."
-#~ msgstr "הזן את קוד האימות שנשלח אליך."
 
 #~ msgid "Verification Code"
 #~ msgstr "קוד אימות"

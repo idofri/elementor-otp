@@ -7,12 +7,15 @@ jQuery( function( $ ) {
         }
         
         var $form = $( event.target );
-        var $content = $form.find( '.elementor-otp' );
         
-        $.featherlight( $content, {
-            root: $form,
+        $.featherlight( $form.find( '.elementor-otp' ), {
+            root: '.elementor-2',
             closeIcon: '',
             otherClose: '.elementor-button',
+            afterOpen: function( event ) {
+                console.log(event);
+                $( event.target ).siblings( 'input' ).prop( 'required', true );
+            },
             afterClose: function( event ) {
                 if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {
                     return;
@@ -36,10 +39,9 @@ jQuery( function( $ ) {
         
     }
     
-    // $( 'document' ).ajaxSuccess( formSubmit );
     $( 'form.elementor-form' ).ajaxSuccess( formSubmit );
     
-    $( 'form.elementor-form' ).on( 'error', function( event ) {
+    $( 'form.elementor-form' ).on( 'error submit_success', function( event ) {
         $( '#code' ).remove();
     } );
     
