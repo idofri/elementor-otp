@@ -5,18 +5,23 @@ use WP_Error;
 
 abstract class Base {
     
-    protected $errors;
+    protected static $errors;
 
     abstract public function send( $recipient );
     
     abstract public function verify( $recipient, $verification_code );
 
     public function hasErrors() {
-        return $this->errors->has_errors();
+        return self::$errors->has_errors();
+    }
+    
+    public function getErrorMessage() {
+        $errorMessages = self::$errors->get_error_messages();
+        return $errorMessages[0];
     }
 
     public function __construct() {
-        $this->errors = new WP_Error;
+        self::$errors = new WP_Error;
     }
     
 }

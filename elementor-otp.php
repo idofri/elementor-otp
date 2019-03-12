@@ -73,9 +73,14 @@ class ElementorOTP {
         $type = $this->getComponent()->get_type();
 
         foreach ( $fields as $field ) {
-            if ( $type === $field['field_type'] ) {
-                $className = ucfirst( $field['otp_vendor'] );
-                $className = "Elementor\\OTP\\Vendor\\{$className}";
+            if ( $type !== $field['field_type'] ) {
+                continue;
+            }
+            
+            $className = ucfirst( $field['otp_vendor'] );
+            $className = "Elementor\\OTP\\Vendor\\{$className}";
+            
+            if ( class_exists( $className ) ) {
                 return new $className();
             }
         }
@@ -101,17 +106,31 @@ class ElementorOTP {
             return;
         }
         
-        echo '<pre>';
-        print_r($_POST);
-        print_r($vendor);
-        exit;
-
-        $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
+        $otpEnabledForm = true;
+        
+        if ( empty( $_POST['code'] ) ) {
+            $vendor->send( $component['value'] );
+            if ( $vendor->hasErrors() ) {
+                $otpEnabledForm = false;
+                $errorMessage = $vendor->getErrorMessage();
+            } else {
+                $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
+            }
+        } else {
+            $code = sanitize_text_field( $_POST['code'] );
+            $vendor->verify( $component['value'], $code );
+            if ( $vendor->hasErrors() ) {
+                $errorMessage = $vendor->getErrorMessage();
+            } else {
+                return;
+            }
+        }
+        
         wp_send_json_error( [
             'message' => $errorMessage,
             'errors'  => [],
             'data'    => [],
-            'otp'     => true
+            'otp'     => $otpEnabledForm
         ] );
     }
     

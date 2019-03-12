@@ -1,43 +1,46 @@
 jQuery( function( $ ) {
     
-    $( 'body' ).on( 'error', function( event ) {
+    function formSubmit( event, xhr, settings ) {
+        
+        if ( ! xhr.responseJSON.data.otp ) {
+            return;
+        }
         
         var $form = $( event.target );
-        
-        // Not our form
-        if ( ! $form.hasClass( 'elementor-form' ) ) {
-            return;
-        }
-        
-        // Form has errors
-        if ( $form.find( '.elementor-message-danger' ).length ) {
-            return;
-        }
-        
-        var otpEnabledForm = false;
-        $form.ajaxSuccess(function( event, xhr, settings ) {
-            if ( xhr.responseJSON.data.otp ) {
-                otpEnabledForm = true;
-            }
-        } );
-        
-        // OTP not present
-        if ( otpEnabledForm ) {
-            return;
-        }
-
         var $content = $form.find( '.elementor-otp' );
+        
         $.featherlight( $content, {
             root: $form,
             closeIcon: '',
             otherClose: '.elementor-button',
             afterClose: function( event ) {
-                if ( $( event.target ).hasClass( 'elementor-button' ) ) {
-                    $form.trigger( 'submit' );
+                if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {
+                    return;
                 }
+                
+                var $code = $( event.target ).siblings( 'input' );
+                if ( $( '#code' ).length ) {
+                    $( '#code' ).val( $code.val() );
+                } else {
+                    $( '<input>' ).attr( {
+                        type: 'hidden',
+                        id: 'code',
+                        name: 'code',
+                        value: $code.val()
+                    } ).appendTo( $form );
+                }
+                
+                $form.trigger( 'submit' );
             }
         } );
         
+    }
+    
+    // $( 'document' ).ajaxSuccess( formSubmit );
+    $( 'form.elementor-form' ).ajaxSuccess( formSubmit );
+    
+    $( 'form.elementor-form' ).on( 'error', function( event ) {
+        $( '#code' ).remove();
     } );
     
 } );

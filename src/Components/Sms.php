@@ -3,6 +3,8 @@ namespace Elementor\OTP\Components;
 
 use Elementor\Controls_Manager;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
+use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Modules\Forms\Fields\Tel;
 
 class Sms extends Tel {
@@ -36,6 +38,12 @@ class Sms extends Tel {
         </div><?php
     }
     
+    public function validation( $field, Form_Record $record, Ajax_Handler $ajax_handler ) {
+        if ( '' === $field['value'] ) {
+            $ajax_handler->add_error( $field['id'], $ajax_handler::get_default_message( $ajax_handler::FIELD_REQUIRED, $record->get( 'form_settings' ) ) );
+        }
+    }
+    
     public function update_controls( $widget ) {
         $elementor = Plugin::elementor();
 
@@ -48,6 +56,14 @@ class Sms extends Tel {
         // Placeholder
         $placeholder = $control_data['fields']['placeholder'];
         $placeholder['conditions']['terms'][0]['value'][] = $this->get_type();
+        
+        // Required
+        $required = $control_data['fields']['required'];
+        $required['conditions']['terms'][] = [
+            'name' => 'field_type',
+            'operator' => '!in',
+            'value' => [ $this->get_type() ]
+        ];
         
         $field_controls = [ 
             'otp_vendor' => [
@@ -65,7 +81,8 @@ class Sms extends Tel {
                 'inner_tab' => 'form_fields_content_tab',
                 'tabs_wrapper' => 'form_fields_tabs',
             ],
-            'placeholder' => $placeholder
+            'placeholder' => $placeholder,
+            'required' => $required
         ];
         
         $control_data['fields'] = $this->inject_field_controls( $control_data['fields'], $field_controls );
