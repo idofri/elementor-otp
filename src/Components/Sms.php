@@ -30,20 +30,31 @@ class Sms extends Tel {
     public function render( $item, $item_index, $form ) {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
         parent::render( $item, $item_index, $form );
-
-        ?><div class="elementor-element elementor-element-<?= $form->get_id(); ?> elementor-widget-form elementor-button-align-stretch elementor-hidden elementor-otp">
-            <div class="elementor-field-group">
-                <label class="elementor-align-center">
+        
+        $form->add_render_attribute( 'hidden-input' . $item_index, 'id', 'otp-code' );
+        $form->add_render_attribute( 'hidden-input' . $item_index, 'type', 'hidden' );
+		$form->add_render_attribute( 'hidden-input' . $item_index, 'name', 'otp-code' );
+		echo '<input ' . $form->get_render_attribute_string( 'hidden-input' . $item_index ) . '>';
+    }
+    
+    public function renderVerificationBox( $form_id ) {
+        ob_start();
+        
+        ?><form class="elementor-element elementor-element-<?= $form_id; ?> elementor-widget-form elementor-button-align-stretch elementor-hidden elementor-otp">
+            <div class="elementor-field-group elementor-align-center">
+                <label for="verification-code">
                     <?php _e( 'Please type the verification code sent to you.', 'elementor-otp' ); ?>
+                    <input size="4" id="verification-code" type="tel" class="elementor-field elementor-field-textual elementor-size-sm elementor-align-center">
                 </label>
-                <input size="4" type="tel" class="elementor-field elementor-field-textual elementor-size-sm elementor-align-center">
             </div>
             <div class="elementor-field-group elementor-field-type-submit elementor-column elementor-col-100">
-                <button type="button" class="elementor-button elementor-size-sm">
+                <button type="submit" class="elementor-button elementor-size-sm">
                     <?php _e( 'Verify', 'elementor-otp' ); ?>
                 </button>
             </div>
-        </div><?php
+        </form><?php
+        
+        return ob_get_clean();
     }
     
     public function validation( $field, Form_Record $record, Ajax_Handler $ajax_handler ) {

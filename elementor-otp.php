@@ -10,30 +10,57 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Elementor\Settings;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Plugin;
 
 class ElementorOTP {
     
     public $version = '1.0.0';
-    
+
     protected static $_component;
-    
+
     public static function getComponent() {
         if ( is_null( self::$_component ) ) {
             self::$_component = new Elementor\OTP\Components\Sms();
         }
         return self::$_component;
     }
-    
+
     public function __construct() {
-        add_action( 'init',                                         [ $this, 'loadTextDomain' ] );
-        add_action( 'elementor_pro/init',                           [ $this, 'addOtpComponent' ] );
+        add_action( 'init',               [ $this, 'loadTextDomain' ] );
+        add_action( 'elementor_pro/init', [ $this, 'initHooks' ] );
+    }
+
+    public function initHooks() {
         add_action( 'elementor_pro/forms/validation',               [ $this, 'otpValidation' ], 10, 2 );
         add_action( 'elementor/frontend/after_register_styles',     [ $this, 'registerStyles' ] );
         add_action( 'elementor/frontend/after_register_scripts',    [ $this, 'registerScripts' ] );
+        
+        if ( is_admin() ) {
+			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'registerAdminFields' ] );
+        }
+        
+        $this->addOtpComponent();
     }
-    
+
+    public function registerAdminFields( Settings $settings ) {
+        $settings->add_section( Settings::TAB_INTEGRATIONS, 'zoho', [
+            'callback' => function() {
+                echo __( '<hr><h2>' . esc_html__( 'Twilio', 'elementor-otp' ) . '</h2>', 'elementor-otp' );
+            },
+            'fields' => [
+                'otp_twilio_api_key' => [
+                    'label' => __( 'Twilio API Key', 'elementor-otp' ),
+                    'field_args' => [
+                        'type' => 'text',
+                        'desc' => sprintf( __( 'You must create a <a href="%s">new Verify application under your Twilio account</a> and put its API key here.', 'elementor-otp' ), 'https://www.twilio.com/docs/verify/api/applications' )
+                    ],
+                ]
+            ],
+        ] );
+    }
+
     public function registerStyles() {
         wp_register_style( 'featherlight', plugins_url( '/assets/lib/featherlight/featherlight.css', __FILE__ ), [], '1.7.13' );
         wp_register_style( 'elementor-otp', plugins_url( '/assets/css/otp.css', __FILE__ ), [], $this->version );
@@ -54,7 +81,7 @@ class ElementorOTP {
             ->get_modules( 'forms' )
             ->add_component( $this->getComponent()->get_name(), $this->getComponent() );
     }
-    
+
     public function getOtpComponent( Form_Record $record ) {
         $fields = $record->get( 'fields' );
         $type = $this->getComponent()->get_type();
@@ -87,13 +114,13 @@ class ElementorOTP {
 
         return false;
     }
-    
+
     public function otpValidation( $record, $ajax_handler ) {
         // Form has errors
         if ( ! $ajax_handler->is_success ) {
             return;
         }
-        
+
         // Component
         $component = $this->getOtpComponent( $record );
         if ( ! $component ) {
@@ -105,11 +132,14 @@ class ElementorOTP {
         if ( ! $vendor ) {
             return;
         }
-        
+
         // @todo: move logic else-where
         $openVerificationBox = true;
-        
-        if ( empty( $_POST['code'] ) ) {
+        $verificationBoxHtml = $this->getComponent()->renderVerificationBox(
+            $record->get( 'form_settings' )['id']
+        );
+
+        if ( empty( $_POST['otp-code'] ) ) {
             $vendor->send( $component['value'] );
             if ( $vendor->hasErrors() ) {
                 $openVerificationBox = false;
@@ -118,7 +148,7 @@ class ElementorOTP {
                 $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
             }
         } else {
-            $code = sanitize_text_field( $_POST['code'] );
+            $code = sanitize_text_field( $_POST['otp-code'] );
             $vendor->verify( $component['value'], $code );
             if ( $vendor->hasErrors() ) {
                 $errorMessage = $vendor->getErrorMessage();
@@ -126,14 +156,16 @@ class ElementorOTP {
                 return;
             }
         }
-        
+
         wp_send_json_error( [
             'message' => $errorMessage,
             'errors'  => [],
             'data'    => [],
-            'otp'     => $openVerificationBox
+            'html'    => $verificationBoxHtml,
+            'otp'     => $openVerificationBox,
         ] );
     }
-    
+
 }
+
 new ElementorOTP();

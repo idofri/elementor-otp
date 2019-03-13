@@ -2,36 +2,23 @@ jQuery( function( $ ) {
     
     function formSubmit( event, xhr, settings ) {
         
-        if ( ! xhr.responseJSON.data.otp ) {
+        if ( xhr.responseJSON.data && ! xhr.responseJSON.data.otp ) {
             return;
         }
         
         var $form = $( event.target );
         
-        $.featherlight( $form.find( '.elementor-otp' ), {
+        $.featherlight( xhr.responseJSON.data.html, {
             root: '.elementor-2',
             closeIcon: '',
             otherClose: '.elementor-button',
-            // afterOpen: function( event ) {
-            //     console.log(event);
-            //     $( event.target ).siblings( 'input' ).prop( 'required', true );
-            // },
-            afterClose: function( event ) {
+            beforeClose: function( event ) {
                 if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {
                     return;
                 }
                 
-                var $code = $( event.target ).parentsUntil( '.featherlight-content' ).find( '[type="tel"]' );
-                if ( $( '#code' ).length ) {
-                    $( '#code' ).val( $code.val() );
-                } else {
-                    $( '<input>' ).attr( {
-                        type: 'hidden',
-                        id: 'code',
-                        name: 'code',
-                        value: $code.val()
-                    } ).appendTo( $form );
-                }
+                var $code = $( '#verification-code' );
+                $( '#otp-code' ).val( $code.val() );
                 
                 $form.trigger( 'submit' );
             }
@@ -42,7 +29,7 @@ jQuery( function( $ ) {
     $( 'form.elementor-form' ).ajaxSuccess( formSubmit );
     
     $( 'form.elementor-form' ).on( 'error submit_success', function( event ) {
-        $( '#code' ).remove();
+        $( '#otp-code' ).val('');
     } );
     
 } );
