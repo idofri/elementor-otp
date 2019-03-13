@@ -5,15 +5,19 @@ use Authy\AuthyApi;
 
 class Twilio extends Base {
     
+    const VIA_METHOD = 'sms';
+    
+    const COUNTRY_CODE = 972;
+    
     const OPTION_NAME_API_KEY = 'elementor_otp_twilio_api_key';
     
     public static function getApiKey() {
         return get_option( self::OPTION_NAME_API_KEY );
     }
 
-    public function send( $phone_number, $country_code, $via = 'sms', $code_length = 4, $locale = null ) {
+    public function send( $phone_number ) {
         $authyApi = new AuthyApi( $this->getApiKey() );
-        $res = $authyApi->phoneVerificationStart( $phone_number, $country_code, $via, $code_length, $locale );
+        $res = $authyApi->phoneVerificationStart( $phone_number, self::COUNTRY_CODE, self::VIA_METHOD );
 
         if ( $res->ok() ) {
             return true;

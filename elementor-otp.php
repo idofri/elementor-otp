@@ -140,7 +140,7 @@ class ElementorOTP {
         );
 
         if ( empty( $_POST['otp-code'] ) ) {
-            $vendor->send( $component['value'] );
+            $vendor->send( $component['value'], 972 );
             if ( $vendor->hasErrors() ) {
                 $openVerificationBox = false;
                 $errorMessage = $vendor->getErrorMessage();
