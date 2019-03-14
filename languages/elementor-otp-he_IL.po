@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-03-14 15:25+0200\n"
+"POT-Creation-Date: 2019-03-14 17:41+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,15 +24,15 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: elementor-otp.php:50
+#: elementor-otp.php:58
 msgid "Twilio Verify"
 msgstr "Twilio Verify"
 
-#: elementor-otp.php:54
+#: elementor-otp.php:62
 msgid "API Key"
 msgstr "מפתח API"
 
-#: elementor-otp.php:57
+#: elementor-otp.php:65
 #, php-format
 msgid ""
 "You must create a <a href=\"%s\">new Verify application under your Twilio "
@@ -41,33 +41,40 @@ msgstr ""
 "עליך ליצור <a href=\"%s\">אפליקציית אימות חדשה תחת חשבון ה-Twilio שלך</a> "
 "ולשים את מפתח ה- API שלה כאן."
 
-#: elementor-otp.php:169
+#: elementor-otp.php:186 src/Vendor/Nexmo.php:95
 msgid "Awaiting verification."
 msgstr "ממתין לאימות."
 
 #: src/Components/Sms.php:27
-msgid "OTP"
-msgstr "OTP"
+msgid "SMS Verification"
+msgstr "אימות SMS"
 
-#: src/Components/Sms.php:51
+#: src/Components/Sms.php:49
 msgid "Please type the verification code sent to you."
 msgstr "הזן את קוד האימות שנשלח אליך."
 
-#: src/Components/Sms.php:53
+#: src/Components/Sms.php:51
 msgid "Enter code"
 msgstr "הכנס קוד"
 
-#: src/Components/Sms.php:57
+#: src/Components/Sms.php:55
 msgid "Verify"
 msgstr "אימות"
 
-#: src/Components/Sms.php:95
+#: src/Components/Sms.php:93
 msgid "Vendor"
 msgstr "ספק"
 
-#: src/Components/Sms.php:102
+#: src/Components/Sms.php:100
 msgid "Twilio"
 msgstr "Twilio"
+
+#: src/Components/Sms.php:101
+msgid "Nexmo"
+msgstr ""
+
+#~ msgid "OTP"
+#~ msgstr "OTP"
 
 #~ msgid "Verification code is incorrect."
 #~ msgstr "קוד האימות שגוי."
@@ -80,9 +87,6 @@ msgstr "Twilio"
 
 #~ msgid "<strong>ERROR</strong>: Enter a phone number."
 #~ msgstr "<strong>שגיאה</strong>: נא למלא מספר טלפון."
-
-#~ msgid "Phone Verification"
-#~ msgstr "אימות טלפון"
 
 #~ msgid "Verification Code"
 #~ msgstr "קוד אימות"

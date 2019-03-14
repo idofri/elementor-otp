@@ -18,13 +18,23 @@ class ElementorOTP {
     
     public $version = '1.0.0';
 
-    protected static $_component;
-
-    public static function getComponent() {
-        if ( is_null( self::$_component ) ) {
-            self::$_component = new Elementor\OTP\Components\Sms();
-        }
-        return self::$_component;
+    protected static $_components = [];
+    
+    public function getComponent( $type ) {
+        return self::$_components[ $type ] ?? false;
+    }
+    
+    public function getAllComponents() {
+        return self::$_components;
+    }
+    
+    public function getComponentTypes() {
+        return array_keys( $this->getAllComponents() );
+    }
+    
+    public function addComponent( $component ) {
+        self::$_components[ $component->get_type() ] = $component;
+        return $this;
     }
 
     public function __construct() {
@@ -41,7 +51,7 @@ class ElementorOTP {
 			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'registerAdminFields' ] );
         }
         
-        $this->addOtpComponent();
+        $this->addOtpComponents();
     }
 
     public function registerAdminFields( Settings $settings ) {
@@ -75,19 +85,21 @@ class ElementorOTP {
         load_plugin_textdomain( 'elementor-otp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     }
 
-    public function addOtpComponent() {
+    public function addOtpComponents() {
+        $smsComponent = new Elementor\OTP\Components\Sms();
+        $this->addComponent( $smsComponent );
+        
         Plugin::instance()
             ->modules_manager
             ->get_modules( 'forms' )
-            ->add_component( $this->getComponent()->get_name(), $this->getComponent() );
+            ->add_component( $smsComponent->get_name(), $smsComponent );
     }
 
     public function getOtpComponent( Form_Record $record ) {
         $fields = $record->get( 'fields' );
-        $type = $this->getComponent()->get_type();
         
         foreach ( $fields as $field ) {
-            if ( $type === $field['type'] ) {
+            if ( in_array( $field['type'], $this->getComponentTypes() ) ) {
                 return $field;
             }
         }
@@ -97,10 +109,9 @@ class ElementorOTP {
 
     public function getOtpVendor( Form_Record $record ) {
         $fields = $record->get_form_settings( 'form_fields' );
-        $type = $this->getComponent()->get_type();
 
         foreach ( $fields as $field ) {
-            if ( $type !== $field['field_type'] ) {
+            if ( ! in_array( $field['field_type'], $this->getComponentTypes() ) ) {
                 continue;
             }
             
@@ -132,7 +143,19 @@ class ElementorOTP {
         if ( ! $vendor ) {
             return;
         }
-
+        
+        // Handle submission
+        $vendor->setHtml( $this->getComponent( $component['type'] )->renderVerificationBox(
+            $record->get( 'form_settings' )['id']
+        ) )->handleSubmit( $component );
+        return;
+        
+        
+        
+        
+        
+        
+        
         // @todo: move logic else-where
         $openVerificationBox = true;
         $verificationBoxHtml = $this->getComponent()->renderVerificationBox(
@@ -157,7 +180,7 @@ class ElementorOTP {
                 $errorMessage = $vendor->getErrorMessage();
                 
                 // Invalid UUID - resend verification code
-                $vendor->clearErrors()->send( $component['value'], 972 );
+                $vendor->clearErrors()->send( $component['value'] );
                 if ( $vendor->hasErrors() ) {
                     $openVerificationBox = false;
                     $errorMessage = $vendor->getErrorMessage();
@@ -166,7 +189,7 @@ class ElementorOTP {
         
         // Send verification code
         } else {
-            $vendor->send( $component['value'], 972 );
+            $vendor->send( $component['value'] );
             if ( $vendor->hasErrors() ) {
                 $openVerificationBox = false;
                 $errorMessage = $vendor->getErrorMessage();

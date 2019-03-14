@@ -20,11 +20,11 @@ class Sms extends Tel {
     ];
 
     public function get_type() {
-        return 'otp';
+        return 'sms';
     }
 
     public function get_name() {
-        return __( 'OTP', 'elementor-otp' );
+        return __( 'SMS Verification', 'elementor-otp' );
     }
     
     public function render( $item, $item_index, $form ) {
@@ -97,7 +97,8 @@ class Sms extends Tel {
                     'field_type' => $this->get_type(),
                 ],
                 'options' => [
-                    'twilio' => __( 'Twilio', 'elementor-otp' )
+                    'twilio' => __( 'Twilio', 'elementor-otp' ),
+                    'nexmo' => __( 'Nexmo', 'elementor-otp' ),
                 ],
                 'tab' => 'content',
                 'inner_tab' => 'form_fields_content_tab',
