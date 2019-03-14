@@ -11,6 +11,15 @@ class Twilio extends Base {
     
     private $uuid;
     
+    protected static $client;
+
+    public function getClient() {
+        if ( is_null( self::$client ) ) {
+            self::$client = new Authy( $this->getApiKey() );
+        }
+        return self::$client;
+    }
+    
     public static function getApiKey() {
         return get_option( self::OPTION_NAME_API_KEY );
     }
@@ -25,8 +34,7 @@ class Twilio extends Base {
     }
 
     public function send( $phone_number ) {
-        $authy = new Authy( $this->getApiKey() );
-        $res = $authy->phoneVerificationStart( $phone_number, self::COUNTRY_CODE, self::VIA_METHOD );
+        $res = $this->getClient()->phoneVerificationStart( $phone_number, self::COUNTRY_CODE, self::VIA_METHOD );
 
         if ( $res->ok() ) {
             $this->setUuid( $res->bodyvar( 'uuid' ) );
@@ -37,8 +45,7 @@ class Twilio extends Base {
     }
 
     public function verify( $phone_number, $verification_code ) {
-        $authy = new Authy( $this->getApiKey() );
-        $res = $authy->phoneVerificationCheck( $phone_number, '972', $verification_code );
+        $res = $this->getClient()->phoneVerificationCheck( $phone_number, '972', $verification_code );
 
         if ( $res->ok() ) {
             return true;
@@ -48,8 +55,7 @@ class Twilio extends Base {
     }
     
     public function status( $uuid ) {
-        $authy = new Authy( $this->getApiKey() );
-        $res = $authy->phoneVerificationStatus( $uuid );
+        $res = $this->getClient()->phoneVerificationStatus( $uuid );
         
         if ( $res->ok() ) {
             return $res;
