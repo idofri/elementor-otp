@@ -8,11 +8,14 @@ jQuery( function( $ ) {
         
         var $form = $( event.target );
         
+        // UUID
+        if ( xhr.responseJSON.data.uuid ) {
+            $( '#otp-uuid' ).val( xhr.responseJSON.data.uuid );
+        }
+        
         $.featherlight( xhr.responseJSON.data.html, {
             root: '.elementor-2',
             closeIcon: '',
-            closeOnEsc: false,
-            closeTrigger: 'submit',
             otherClose: '.elementor-button',
             beforeClose: function( event ) {
                 if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {
@@ -32,6 +35,10 @@ jQuery( function( $ ) {
     
     $( 'form.elementor-form' ).on( 'error submit_success', function( event ) {
         $( '#otp-code' ).val('');
+    } );
+    
+    $( 'form.elementor-form' ).on( 'submit_success', function( event ) {
+        $( '#otp-uuid' ).val('');
     } );
     
 } );

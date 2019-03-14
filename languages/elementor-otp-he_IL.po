@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-03-14 12:12+0200\n"
+"POT-Creation-Date: 2019-03-14 15:25+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,9 +24,9 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: elementor-otp.php:50 src/Components/Sms.php:97
-msgid "Twilio"
-msgstr "Twilio"
+#: elementor-otp.php:50
+msgid "Twilio Verify"
+msgstr "Twilio Verify"
 
 #: elementor-otp.php:54
 msgid "API Key"
@@ -41,7 +41,7 @@ msgstr ""
 "עליך ליצור <a href=\"%s\">אפליקציית אימות חדשה תחת חשבון ה-Twilio שלך</a> "
 "ולשים את מפתח ה- API שלה כאן."
 
-#: elementor-otp.php:148
+#: elementor-otp.php:169
 msgid "Awaiting verification."
 msgstr "ממתין לאימות."
 
@@ -49,21 +49,25 @@ msgstr "ממתין לאימות."
 msgid "OTP"
 msgstr "OTP"
 
-#: src/Components/Sms.php:46
+#: src/Components/Sms.php:51
 msgid "Please type the verification code sent to you."
 msgstr "הזן את קוד האימות שנשלח אליך."
 
-#: src/Components/Sms.php:48
+#: src/Components/Sms.php:53
 msgid "Enter code"
 msgstr "הכנס קוד"
 
-#: src/Components/Sms.php:52
+#: src/Components/Sms.php:57
 msgid "Verify"
 msgstr "אימות"
 
-#: src/Components/Sms.php:90
+#: src/Components/Sms.php:95
 msgid "Vendor"
 msgstr "ספק"
+
+#: src/Components/Sms.php:102
+msgid "Twilio"
+msgstr "Twilio"
 
 #~ msgid "Verification code is incorrect."
 #~ msgstr "קוד האימות שגוי."
@@ -97,9 +101,6 @@ msgstr "ספק"
 
 #~ msgid "Confirm new password"
 #~ msgstr "לאישור הסיסמה החדשה"
-
-#~ msgid "Twilio Settings"
-#~ msgstr "הגדרות Twilio"
 
 #~ msgid "Auto Login"
 #~ msgstr "התחברות אוטומטית"

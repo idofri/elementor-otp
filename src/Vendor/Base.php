@@ -15,13 +15,18 @@ abstract class Base {
         return self::$errors->has_errors();
     }
     
+    public function clearErrors() {
+        self::$errors = new WP_Error;
+        return $this;
+    }
+    
     public function getErrorMessage() {
         $errorMessages = self::$errors->get_error_messages();
         return reset( $errorMessages );
     }
 
     public function __construct() {
-        self::$errors = new WP_Error;
+        $this->clearErrors();
     }
     
 }

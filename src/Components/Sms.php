@@ -31,10 +31,15 @@ class Sms extends Tel {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
         parent::render( $item, $item_index, $form );
         
-        $form->add_render_attribute( 'hidden-input' . $item_index, 'id', 'otp-code' );
-        $form->add_render_attribute( 'hidden-input' . $item_index, 'type', 'hidden' );
-		$form->add_render_attribute( 'hidden-input' . $item_index, 'name', 'otp-code' );
-		echo '<input ' . $form->get_render_attribute_string( 'hidden-input' . $item_index ) . '>';
+        $form->add_render_attribute( 'code' . $item_index, 'id', 'otp-code' );
+        $form->add_render_attribute( 'code' . $item_index, 'type', 'hidden' );
+		$form->add_render_attribute( 'code' . $item_index, 'name', 'otp-code' );
+        echo '<input ' . $form->get_render_attribute_string( 'code' . $item_index ) . '>';
+        
+        $form->add_render_attribute( 'uuid' . $item_index, 'id', 'otp-uuid' );
+        $form->add_render_attribute( 'uuid' . $item_index, 'type', 'hidden' );
+		$form->add_render_attribute( 'uuid' . $item_index, 'name', 'otp-uuid' );
+		echo '<input ' . $form->get_render_attribute_string( 'uuid' . $item_index ) . '>';
     }
     
     public function renderVerificationBox( $form_id ) {

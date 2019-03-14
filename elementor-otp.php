@@ -47,7 +47,7 @@ class ElementorOTP {
     public function registerAdminFields( Settings $settings ) {
         $settings->add_section( Settings::TAB_INTEGRATIONS, 'zoho', [
             'callback' => function() {
-                echo '<hr><h2>' . esc_html__( 'Twilio', 'elementor-otp' ) . '</h2>';
+                echo '<hr><h2>' . esc_html__( 'Twilio Verify', 'elementor-otp' ) . '</h2>';
             },
             'fields' => [
                 'otp_twilio_api_key' => [
@@ -138,16 +138,9 @@ class ElementorOTP {
         $verificationBoxHtml = $this->getComponent()->renderVerificationBox(
             $record->get( 'form_settings' )['id']
         );
-
-        if ( empty( $_POST['otp-code'] ) ) {
-            $vendor->send( $component['value'], 972 );
-            if ( $vendor->hasErrors() ) {
-                $openVerificationBox = false;
-                $errorMessage = $vendor->getErrorMessage();
-            } else {
-                $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
-            }
-        } else {
+        
+        // Check verification code
+        if ( ! empty( $_POST['otp-code'] ) ) {
             $code = sanitize_text_field( $_POST['otp-code'] );
             $vendor->verify( $component['value'], $code );
             if ( $vendor->hasErrors() ) {
@@ -155,12 +148,38 @@ class ElementorOTP {
             } else {
                 return;
             }
+        
+        // Start verification using UUID
+        } elseif ( ! empty( $_POST['otp-uuid'] ) ) {
+            $uuid = sanitize_text_field( $_POST['otp-uuid'] );
+            $vendor->status( $uuid );
+            if ( $vendor->hasErrors() ) {
+                $errorMessage = $vendor->getErrorMessage();
+                
+                // Invalid UUID - resend verification code
+                $vendor->clearErrors()->send( $component['value'], 972 );
+                if ( $vendor->hasErrors() ) {
+                    $openVerificationBox = false;
+                    $errorMessage = $vendor->getErrorMessage();
+                }
+            }
+        
+        // Send verification code
+        } else {
+            $vendor->send( $component['value'], 972 );
+            if ( $vendor->hasErrors() ) {
+                $openVerificationBox = false;
+                $errorMessage = $vendor->getErrorMessage();
+            } else {
+                $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
+            }
         }
 
         wp_send_json_error( [
             'message' => $errorMessage,
             'errors'  => [],
             'data'    => [],
+            'uuid'    => $vendor->getUuid(),
             'html'    => $verificationBoxHtml,
             'otp'     => $openVerificationBox,
         ] );
