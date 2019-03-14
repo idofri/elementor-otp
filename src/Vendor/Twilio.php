@@ -18,7 +18,7 @@ class Twilio extends Base {
     public function send( $phone_number ) {
         $authyApi = new AuthyApi( $this->getApiKey() );
         $res = $authyApi->phoneVerificationStart( $phone_number, self::COUNTRY_CODE, self::VIA_METHOD );
-
+        
         if ( $res->ok() ) {
             return true;
         }

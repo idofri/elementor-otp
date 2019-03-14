@@ -47,11 +47,11 @@ class ElementorOTP {
     public function registerAdminFields( Settings $settings ) {
         $settings->add_section( Settings::TAB_INTEGRATIONS, 'zoho', [
             'callback' => function() {
-                echo __( '<hr><h2>' . esc_html__( 'Twilio', 'elementor-otp' ) . '</h2>', 'elementor-otp' );
+                echo '<hr><h2>' . esc_html__( 'Twilio', 'elementor-otp' ) . '</h2>';
             },
             'fields' => [
                 'otp_twilio_api_key' => [
-                    'label' => __( 'Twilio API Key', 'elementor-otp' ),
+                    'label' => __( 'API Key', 'elementor-otp' ),
                     'field_args' => [
                         'type' => 'text',
                         'desc' => sprintf( __( 'You must create a <a href="%s">new Verify application under your Twilio account</a> and put its API key here.', 'elementor-otp' ), 'https://www.twilio.com/docs/verify/api/applications' )

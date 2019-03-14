@@ -45,7 +45,7 @@ class Sms extends Tel {
                 <label for="verification-code">
                     <?php _e( 'Please type the verification code sent to you.', 'elementor-otp' ); ?>
                 </label>
-                <input id="verification-code" type="tel" class="elementor-field-textual elementor-size-sm elementor-align-center">
+                <input id="verification-code" type="tel" class="elementor-field-textual elementor-size-sm elementor-align-center" placeholder="<?php esc_attr_e( 'Enter code', 'elementor-otp' ); ?>" required>
             </div>
             <div class="elementor-field-group elementor-field-type-submit elementor-column elementor-col-100">
                 <button type="submit" class="elementor-button elementor-size-sm">

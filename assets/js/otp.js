@@ -11,6 +11,8 @@ jQuery( function( $ ) {
         $.featherlight( xhr.responseJSON.data.html, {
             root: '.elementor-2',
             closeIcon: '',
+            closeOnEsc: false,
+            closeTrigger: 'submit',
             otherClose: '.elementor-button',
             beforeClose: function( event ) {
                 if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {

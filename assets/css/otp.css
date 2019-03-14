@@ -1,0 +1,7 @@
+.elementor .featherlight-content {
+    max-width: 320px;
+}
+
+.elementor .featherlight-content label {
+    font-size: .9em;
+}
