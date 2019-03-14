@@ -31,12 +31,10 @@ class Sms extends Tel {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
         parent::render( $item, $item_index, $form );
         
-        $form->add_render_attribute( 'code' . $item_index, 'id', 'otp-code' );
         $form->add_render_attribute( 'code' . $item_index, 'type', 'hidden' );
 		$form->add_render_attribute( 'code' . $item_index, 'name', 'otp-code' );
         echo '<input ' . $form->get_render_attribute_string( 'code' . $item_index ) . '>';
         
-        $form->add_render_attribute( 'uuid' . $item_index, 'id', 'otp-uuid' );
         $form->add_render_attribute( 'uuid' . $item_index, 'type', 'hidden' );
 		$form->add_render_attribute( 'uuid' . $item_index, 'name', 'otp-uuid' );
 		echo '<input ' . $form->get_render_attribute_string( 'uuid' . $item_index ) . '>';
@@ -50,7 +48,7 @@ class Sms extends Tel {
                 <label for="verification-code">
                     <?php _e( 'Please type the verification code sent to you.', 'elementor-otp' ); ?>
                 </label>
-                <input id="verification-code" type="tel" class="elementor-field-textual elementor-size-sm elementor-align-center" placeholder="<?php esc_attr_e( 'Enter code', 'elementor-otp' ); ?>" required>
+                <input type="tel" class="elementor-field-textual elementor-size-sm elementor-align-center otp-code" placeholder="<?php esc_attr_e( 'Enter code', 'elementor-otp' ); ?>" required>
             </div>
             <div class="elementor-field-group elementor-field-type-submit elementor-column elementor-col-100">
                 <button type="submit" class="elementor-button elementor-size-sm">

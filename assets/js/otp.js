@@ -7,10 +7,12 @@ jQuery( function( $ ) {
         }
         
         var $form = $( event.target );
+        var $otpUuid = $form.find( '[name="otp-uuid"]' );
+        var $otpCode = $form.find( '[name="otp-code"]' );
         
         // UUID
         if ( xhr.responseJSON.data.uuid ) {
-            $( '#otp-uuid' ).val( xhr.responseJSON.data.uuid );
+            $otpUuid.val( xhr.responseJSON.data.uuid );
         }
         
         $.featherlight( xhr.responseJSON.data.html, {
@@ -22,9 +24,7 @@ jQuery( function( $ ) {
                     return;
                 }
                 
-                var $code = $( '#verification-code' );
-                $( '#otp-code' ).val( $code.val() );
-                
+                $otpCode.val( $( event.currentTarget ).find( '.otp-code' ).val() );
                 $form.trigger( 'submit' );
             }
         } );
