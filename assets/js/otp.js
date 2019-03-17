@@ -34,11 +34,17 @@ jQuery( function( $ ) {
     $( 'form.elementor-form' ).ajaxSuccess( formSubmit );
     
     $( 'form.elementor-form' ).on( 'error submit_success', function( event ) {
-        $( '#otp-code' ).val('');
+        var $otpCode = $( event.target ).find( '[name="otp-code"]' );
+        if ( $otpCode ) {
+            $otpCode.val('');
+        }
     } );
     
     $( 'form.elementor-form' ).on( 'submit_success', function( event ) {
-        $( '#otp-token' ).val('');
+        var $otpToken = $( event.target ).find( '[name="otp-token"]' );
+        if ( $otpToken ) {
+            $otpToken.val('');
+        }
     } );
     
 } );
