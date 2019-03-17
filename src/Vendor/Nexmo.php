@@ -13,8 +13,6 @@ class Nexmo extends Base {
 
     const NEXMO_API_SECRET = 'BYaew9Hzb8dhvsjj';
     
-    protected static $html;
-    
     protected static $client;
 
     protected static $credentials;
@@ -42,15 +40,6 @@ class Nexmo extends Base {
     
     public function getRequestId() {
         return self::$request_id;
-    }
-    
-    public function setHtml( $html ) {
-        self::$html = $html;
-        return $this;
-    }
-    
-    public function getHtml() {
-        return self::$html;
     }
 
     public function send( $phone_number ) {

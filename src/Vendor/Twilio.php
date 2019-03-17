@@ -70,5 +70,54 @@ class Twilio extends Base {
         self::$errors->add( $errorCode, __( $errorMessage, 'elementor-otp' ) );
         return false;
     }
+
+    public function submit( $component ) {
+        $openVerificationBox = true;
+        
+        // Check verification code
+        if ( ! empty( $_POST['otp-code'] ) ) {
+            $code = sanitize_text_field( $_POST['otp-code'] );
+            $this->verify( $component['value'], $code );
+            if ( $this->hasErrors() ) {
+                $errorMessage = $this->getErrorMessage();
+            } else {
+                return;
+            }
+        
+        // Start verification using UUID
+        } elseif ( ! empty( $_POST['otp-token'] ) ) {
+            $uuid = sanitize_text_field( $_POST['otp-token'] );
+            $this->status( $uuid );
+            if ( $this->hasErrors() ) {
+                $errorMessage = $this->getErrorMessage();
+                
+                // Invalid UUID - resend verification code
+                $this->clearErrors()->send( $component['value'], 972 );
+                if ( $this->hasErrors() ) {
+                    $openVerificationBox = false;
+                    $errorMessage = $this->getErrorMessage();
+                }
+            }
+        
+        // Send verification code
+        } else {
+            $this->send( $component['value'], 972 );
+            if ( $this->hasErrors() ) {
+                $openVerificationBox = false;
+                $errorMessage = $this->getErrorMessage();
+            } else {
+                $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
+            }
+        }
+
+        wp_send_json_error( [
+            'message' => $errorMessage,
+            'errors'  => [],
+            'data'    => [],
+            'html'    => $this->getHtml(),
+            'token'   => $this->getUuid(),
+            'verify'  => $openVerificationBox,
+        ] );
+    }
     
 }
