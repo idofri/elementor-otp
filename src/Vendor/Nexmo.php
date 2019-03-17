@@ -91,7 +91,7 @@ class Nexmo extends Base {
         
         } elseif ( ! empty( $_POST['otp-token'] ) ) {
             
-            $errorMessage = '';
+            $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
             
         // Send verification code
         } else {
