@@ -9,10 +9,10 @@ use Nexmo\Verify\Verification;
 
 class Nexmo extends Base {
 
-    const NEXMO_API_KEY = 'a87c8384';
+    const OPTION_NAME_API_KEY = 'elementor_otp_nexmo_api_key';
 
-    const NEXMO_API_SECRET = 'BYaew9Hzb8dhvsjj';
-    
+    const OPTION_NAME_API_SECRET = 'elementor_otp_nexmo_api_secret';
+
     protected static $client;
 
     protected static $credentials;
@@ -28,11 +28,19 @@ class Nexmo extends Base {
 
     public function getCredentials() {
         if ( is_null( self::$credentials ) ) {
-            self::$credentials = new Basic( self::NEXMO_API_KEY, self::NEXMO_API_SECRET );
+            self::$credentials = new Basic( self::getApiKey(), self::getApiSecret() );
         }
         return self::$credentials;
     }
     
+    public static function getApiKey() {
+        return get_option( self::OPTION_NAME_API_KEY );
+    }
+
+    public static function getApiSecret() {
+        return get_option( self::OPTION_NAME_API_SECRET );
+    }
+
     public function setRequestId( $request_id ) {
         self::$request_id = $request_id;
         return $this;
