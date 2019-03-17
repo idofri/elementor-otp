@@ -147,65 +147,7 @@ class ElementorOTP {
         // Handle submission
         $vendor->setHtml( $this->getComponent( $component['type'] )->renderVerificationBox(
             $record->get( 'form_settings' )['id']
-        ) )->handleSubmit( $component );
-        return;
-        
-        
-        
-        
-        
-        
-        
-        // @todo: move logic else-where
-        $openVerificationBox = true;
-        $verificationBoxHtml = $this->getComponent()->renderVerificationBox(
-            $record->get( 'form_settings' )['id']
-        );
-        
-        // Check verification code
-        if ( ! empty( $_POST['otp-code'] ) ) {
-            $code = sanitize_text_field( $_POST['otp-code'] );
-            $vendor->verify( $component['value'], $code );
-            if ( $vendor->hasErrors() ) {
-                $errorMessage = $vendor->getErrorMessage();
-            } else {
-                return;
-            }
-        
-        // Start verification using UUID
-        } elseif ( ! empty( $_POST['otp-uuid'] ) ) {
-            $uuid = sanitize_text_field( $_POST['otp-uuid'] );
-            $vendor->status( $uuid );
-            if ( $vendor->hasErrors() ) {
-                $errorMessage = $vendor->getErrorMessage();
-                
-                // Invalid UUID - resend verification code
-                $vendor->clearErrors()->send( $component['value'] );
-                if ( $vendor->hasErrors() ) {
-                    $openVerificationBox = false;
-                    $errorMessage = $vendor->getErrorMessage();
-                }
-            }
-        
-        // Send verification code
-        } else {
-            $vendor->send( $component['value'] );
-            if ( $vendor->hasErrors() ) {
-                $openVerificationBox = false;
-                $errorMessage = $vendor->getErrorMessage();
-            } else {
-                $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
-            }
-        }
-
-        wp_send_json_error( [
-            'message' => $errorMessage,
-            'errors'  => [],
-            'data'    => [],
-            'uuid'    => $vendor->getUuid(),
-            'html'    => $verificationBoxHtml,
-            'otp'     => $openVerificationBox,
-        ] );
+        ) )->submit( $component );
     }
 
 }

@@ -35,9 +35,9 @@ class Sms extends Tel {
 		$form->add_render_attribute( 'code' . $item_index, 'name', 'otp-code' );
         echo '<input ' . $form->get_render_attribute_string( 'code' . $item_index ) . '>';
         
-        $form->add_render_attribute( 'uuid' . $item_index, 'type', 'hidden' );
-		$form->add_render_attribute( 'uuid' . $item_index, 'name', 'otp-uuid' );
-		echo '<input ' . $form->get_render_attribute_string( 'uuid' . $item_index ) . '>';
+        $form->add_render_attribute( 'token' . $item_index, 'type', 'hidden' );
+		$form->add_render_attribute( 'token' . $item_index, 'name', 'otp-token' );
+		echo '<input ' . $form->get_render_attribute_string( 'token' . $item_index ) . '>';
     }
     
     public function renderVerificationBox( $form_id ) {

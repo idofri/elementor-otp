@@ -78,12 +78,12 @@ class Nexmo extends Base {
         return false;
     }
     
-    public function handleSubmit( $component ) {
+    public function submit( $component ) {
         $openVerificationBox = true;
         
         // Check verification code
-        if ( ! empty( $_POST['otp-code'] ) && ! empty( $_POST['otp-uuid'] ) ) {
-            $request_id = sanitize_text_field( $_POST['otp-uuid'] );
+        if ( ! empty( $_POST['otp-code'] ) && ! empty( $_POST['otp-token'] ) ) {
+            $request_id = sanitize_text_field( $_POST['otp-token'] );
             $code = sanitize_text_field( $_POST['otp-code'] );
             $this->verify( $request_id, $code );
             if ( $this->hasErrors() ) {
@@ -92,7 +92,7 @@ class Nexmo extends Base {
                 return;
             }
         
-        } elseif ( ! empty( $_POST['otp-uuid'] ) ) {
+        } elseif ( ! empty( $_POST['otp-token'] ) ) {
             
             $errorMessage = '';
             
@@ -112,8 +112,8 @@ class Nexmo extends Base {
             'errors'  => [],
             'data'    => [],
             'html'    => $this->getHtml(),
-            'uuid'    => $this->getRequestId(),
-            'otp'     => $openVerificationBox,
+            'token'   => $this->getRequestId(),
+            'verify'  => $openVerificationBox,
         ] );
     }
     

@@ -7,6 +7,8 @@ abstract class Base {
     
     protected static $errors;
 
+    abstract public function submit( $component );
+
     abstract public function send( $recipient );
     
     abstract public function verify( $recipient, $verification_code );

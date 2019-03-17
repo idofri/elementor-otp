@@ -2,17 +2,17 @@ jQuery( function( $ ) {
     
     function formSubmit( event, xhr, settings ) {
         
-        if ( xhr.responseJSON.data && ! xhr.responseJSON.data.otp ) {
+        if ( xhr.responseJSON.data && ! xhr.responseJSON.data.verify ) {
             return;
         }
         
         var $form = $( event.target );
-        var $otpUuid = $form.find( '[name="otp-uuid"]' );
+        var $otpToken = $form.find( '[name="otp-token"]' );
         var $otpCode = $form.find( '[name="otp-code"]' );
         
-        // UUID
-        if ( xhr.responseJSON.data.uuid ) {
-            $otpUuid.val( xhr.responseJSON.data.uuid );
+        // Token
+        if ( xhr.responseJSON.data.token ) {
+            $otpToken.val( xhr.responseJSON.data.token );
         }
         
         $.featherlight( xhr.responseJSON.data.html, {
@@ -38,7 +38,7 @@ jQuery( function( $ ) {
     } );
     
     $( 'form.elementor-form' ).on( 'submit_success', function( event ) {
-        $( '#otp-uuid' ).val('');
+        $( '#otp-token' ).val('');
     } );
     
 } );
