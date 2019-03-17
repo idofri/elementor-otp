@@ -48,14 +48,14 @@ class ElementorOTP {
         add_action( 'elementor/frontend/after_register_scripts',    [ $this, 'registerScripts' ] );
         
         if ( is_admin() ) {
-			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'registerAdminFields' ] );
+            add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'registerAdminFields' ] );
         }
         
         $this->addOtpComponents();
     }
 
     public function registerAdminFields( Settings $settings ) {
-        $settings->add_section( Settings::TAB_INTEGRATIONS, 'zoho', [
+        $settings->add_section( Settings::TAB_INTEGRATIONS, 'twilio', [
             'callback' => function() {
                 echo '<hr><h2>' . esc_html__( 'Twilio Verify', 'elementor-otp' ) . '</h2>';
             },
@@ -64,10 +64,31 @@ class ElementorOTP {
                     'label' => __( 'API Key', 'elementor-otp' ),
                     'field_args' => [
                         'type' => 'text',
-                        'desc' => sprintf( __( 'You must create a <a href="%s">new Verify application under your Twilio account</a> and put its API key here.', 'elementor-otp' ), 'https://www.twilio.com/docs/verify/api/applications' )
-                    ],
+                        'desc' => sprintf( __( 'To integrate with our forms you need an <a href="%s" target="_blank">API Key</a>.', 'elementor-otp' ), 'https://www.twilio.com/docs/verify/api/applications' )
+                    ]
                 ]
-            ],
+            ]
+        ] );
+
+        $settings->add_section( Settings::TAB_INTEGRATIONS, 'nexmo', [
+            'callback' => function() {
+                echo '<hr><h2>' . esc_html__( 'Nexmo', 'elementor-otp' ) . '</h2>';
+            },
+            'fields' => [
+                'otp_nexmo_api_key' => [
+                    'label' => __( 'API Key', 'elementor-otp' ),
+                    'field_args' => [
+                        'type' => 'text'
+                    ]
+                ],
+                'otp_nexmo_api_secret' => [
+                    'label' => __( 'API Secret', 'elementor-otp' ),
+                    'field_args' => [
+                        'type' => 'text',
+                        'desc' => sprintf( __( 'To integrate with our forms you need an <a href="%s" target="_blank">API Key</a>.', 'elementor-otp' ), 'https://developer.nexmo.com/verify/overview' )
+                    ]
+                ]
+            ]
         ] );
     }
 
