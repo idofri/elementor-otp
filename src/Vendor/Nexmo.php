@@ -58,7 +58,6 @@ class Nexmo extends Base {
             return $this->error( $e->getMessage() );
         }
         
-        error_log( print_r( $verification, true ) );
         $this->setRequestId( $verification->getRequestId() );
     }
 
