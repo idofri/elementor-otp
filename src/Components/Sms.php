@@ -101,6 +101,7 @@ class Sms extends Tel {
                 'options' => [
                     'twilio' => __( 'Twilio', 'elementor-otp' ),
                     'nexmo' => __( 'Nexmo', 'elementor-otp' ),
+                    'plivo' => __( 'Plivo', 'elementor-otp' )
                 ],
                 'tab' => 'content',
                 'inner_tab' => 'form_fields_content_tab',

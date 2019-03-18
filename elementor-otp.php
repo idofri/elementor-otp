@@ -88,6 +88,27 @@ class ElementorOTP {
             ]
         ] );
 
+        $settings->add_section( Settings::TAB_INTEGRATIONS, 'plivo', [
+            'callback' => function() {
+                echo '<hr><h2>' . esc_html__( 'Plivo', 'elementor-otp' ) . '</h2>';
+            },
+            'fields' => [
+                'otp_plivo_auth_id' => [
+                    'label' => __( 'Auth ID', 'elementor-otp' ),
+                    'field_args' => [
+                        'type' => 'text'
+                    ]
+                ],
+                'otp_plivo_auth_token' => [
+                    'label' => __( 'Auth Token', 'elementor-otp' ),
+                    'field_args' => [
+                        'type' => 'text',
+                        'desc' => sprintf( __( 'To integrate with our forms you need an <a href="%s" target="_blank">API Key</a>.', 'elementor-otp' ), 'https://console.plivo.com' )
+                    ]
+                ]
+            ]
+        ] );
+
         do_action( 'elementor_otp/admin/settings', $settings, $this );
     }
 
