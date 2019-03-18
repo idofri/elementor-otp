@@ -1,7 +1,8 @@
 {
     "require": {
         "authy/php": "^3.0",
-        "nexmo/client": "^1.6"
+        "nexmo/client": "^1.6",
+        "plivo/php-sdk": "^4.3"
     },
 	"autoload": {
         "psr-4": {"Elementor\\OTP\\": "src/"}
