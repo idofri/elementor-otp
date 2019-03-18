@@ -8,9 +8,9 @@ class Twilio extends Base {
     const COUNTRY_CODE = 972;
 
     const OPTION_NAME_API_KEY = 'elementor_otp_twilio_api_key';
-    
+
     private $uuid;
-    
+
     protected static $client;
 
     public function getClient() {
@@ -19,16 +19,16 @@ class Twilio extends Base {
         }
         return self::$client;
     }
-    
+
     public static function getApiKey() {
         return get_option( self::OPTION_NAME_API_KEY );
     }
-    
+
     public function setUuid( $uuid ) {
         $this->uuid = $uuid;
         return $this;
     }
-    
+
     public function getUuid() {
         return $this->uuid;
     }
@@ -50,20 +50,20 @@ class Twilio extends Base {
         if ( $res->ok() ) {
             return true;
         }
-        
+
         return $this->error( $res );
     }
-    
+
     public function status( $uuid ) {
         $res = $this->getClient()->phoneVerificationStatus( $uuid );
-        
+
         if ( $res->ok() ) {
             return $res;
         }
-        
+
         return $this->error( $res );
     }
-    
+
     public function error( $res ) {
         $errorCode = $res->bodyvar( 'error_code' );
         $errorMessage = $res->bodyvar( 'message' );
@@ -73,7 +73,7 @@ class Twilio extends Base {
 
     public function submit( $component ) {
         $openVerificationBox = true;
-        
+
         // Check verification code
         if ( ! empty( $_POST['otp-code'] ) ) {
             $code = sanitize_text_field( $_POST['otp-code'] );
@@ -83,14 +83,14 @@ class Twilio extends Base {
             } else {
                 return;
             }
-        
+
         // Start verification using UUID
         } elseif ( ! empty( $_POST['otp-token'] ) ) {
             $uuid = sanitize_text_field( $_POST['otp-token'] );
             $this->status( $uuid );
             if ( $this->hasErrors() ) {
                 $errorMessage = $this->getErrorMessage();
-                
+
                 // Invalid UUID - resend verification code
                 $this->clearErrors()->send( $component['value'], 972 );
                 if ( $this->hasErrors() ) {
@@ -98,7 +98,7 @@ class Twilio extends Base {
                     $errorMessage = $this->getErrorMessage();
                 }
             }
-        
+
         // Send verification code
         } else {
             $this->send( $component['value'], 972 );
@@ -119,5 +119,5 @@ class Twilio extends Base {
             'verify'  => $openVerificationBox,
         ] );
     }
-    
+
 }

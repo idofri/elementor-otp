@@ -8,7 +8,7 @@ use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Modules\Forms\Fields\Tel;
 
 class Sms extends Tel {
-    
+
     public $depended_scripts = [
         'featherlight',
         'elementor-otp'
@@ -26,23 +26,23 @@ class Sms extends Tel {
     public function get_name() {
         return __( 'SMS Verification', 'elementor-otp' );
     }
-    
+
     public function render( $item, $item_index, $form ) {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
         parent::render( $item, $item_index, $form );
-        
+
         $form->add_render_attribute( 'code' . $item_index, 'type', 'hidden' );
 		$form->add_render_attribute( 'code' . $item_index, 'name', 'otp-code' );
         echo '<input ' . $form->get_render_attribute_string( 'code' . $item_index ) . '>';
-        
+
         $form->add_render_attribute( 'token' . $item_index, 'type', 'hidden' );
 		$form->add_render_attribute( 'token' . $item_index, 'name', 'otp-token' );
 		echo '<input ' . $form->get_render_attribute_string( 'token' . $item_index ) . '>';
     }
-    
+
     public function renderVerificationBox( $form_id ) {
         ob_start();
-        
+
         ?><form class="elementor-element elementor-element-<?= $form_id; ?> elementor-widget-form elementor-button-align-stretch elementor-hidden elementor-otp">
             <div class="elementor-field-group elementor-align-center">
                 <label for="verification-code">
@@ -56,16 +56,16 @@ class Sms extends Tel {
                 </button>
             </div>
         </form><?php
-        
+
         return ob_get_clean();
     }
-    
+
     public function validation( $field, Form_Record $record, Ajax_Handler $ajax_handler ) {
         if ( '' === $field['value'] ) {
             $ajax_handler->add_error( $field['id'], $ajax_handler::get_default_message( $ajax_handler::FIELD_REQUIRED, $record->get( 'form_settings' ) ) );
         }
     }
-    
+
     public function update_controls( $widget ) {
         $elementor = Plugin::elementor();
 
@@ -74,11 +74,11 @@ class Sms extends Tel {
         if ( is_wp_error( $control_data ) ) {
             return;
         }
-        
+
         // Placeholder
         $placeholder = $control_data['fields']['placeholder'];
         $placeholder['conditions']['terms'][0]['value'][] = $this->get_type();
-        
+
         // Required
         $required = $control_data['fields']['required'];
         $required['conditions']['terms'][] = [
@@ -86,8 +86,8 @@ class Sms extends Tel {
             'operator' => '!in',
             'value' => [ $this->get_type() ]
         ];
-        
-        $field_controls = [ 
+
+        $field_controls = [
             'otp_vendor' => [
                 'name' => 'otp_vendor',
                 'label' => __( 'Vendor', 'elementor-otp' ),
@@ -107,9 +107,9 @@ class Sms extends Tel {
             'placeholder' => $placeholder,
             'required' => $required
         ];
-        
+
         $control_data['fields'] = $this->inject_field_controls( $control_data['fields'], $field_controls );
         $widget->update_control( 'form_fields', $control_data );
     }
-    
+
 }

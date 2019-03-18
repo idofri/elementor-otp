@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Elementor OTP
- * Description: 
+ * Description:
  * Version:     1.0.0
  * Author:      Ido Friedlander
  * Author URI:  https://github.com/idofri
@@ -15,23 +15,23 @@ use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Plugin;
 
 class ElementorOTP {
-    
+
     public $version = '1.0.0';
 
     protected static $_components = [];
-    
+
     public function getComponent( $type ) {
         return self::$_components[ $type ] ?? false;
     }
-    
+
     public function getAllComponents() {
         return self::$_components;
     }
-    
+
     public function getComponentTypes() {
         return array_keys( $this->getAllComponents() );
     }
-    
+
     public function addComponent( $component ) {
         self::$_components[ $component->get_type() ] = $component;
         return $this;
@@ -46,11 +46,11 @@ class ElementorOTP {
         add_action( 'elementor_pro/forms/validation',               [ $this, 'otpValidation' ], 10, 2 );
         add_action( 'elementor/frontend/after_register_styles',     [ $this, 'registerStyles' ] );
         add_action( 'elementor/frontend/after_register_scripts',    [ $this, 'registerScripts' ] );
-        
+
         if ( is_admin() ) {
             add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'registerAdminFields' ] );
         }
-        
+
         $this->addOtpComponents();
     }
 
@@ -109,7 +109,7 @@ class ElementorOTP {
     public function addOtpComponents() {
         $smsComponent = new Elementor\OTP\Components\Sms();
         $this->addComponent( $smsComponent );
-        
+
         Plugin::instance()
             ->modules_manager
             ->get_modules( 'forms' )
@@ -118,7 +118,7 @@ class ElementorOTP {
 
     public function getOtpComponent( Form_Record $record ) {
         $fields = $record->get( 'fields' );
-        
+
         foreach ( $fields as $field ) {
             if ( in_array( $field['type'], $this->getComponentTypes() ) ) {
                 return $field;
@@ -135,10 +135,10 @@ class ElementorOTP {
             if ( ! in_array( $field['field_type'], $this->getComponentTypes() ) ) {
                 continue;
             }
-            
+
             $className = ucfirst( $field['otp_vendor'] );
             $className = "Elementor\\OTP\\Vendor\\{$className}";
-            
+
             if ( class_exists( $className ) ) {
                 return new $className();
             }
@@ -164,7 +164,7 @@ class ElementorOTP {
         if ( ! $vendor ) {
             return;
         }
-        
+
         // Handle submission
         $vendor->setHtml( $this->getComponent( $component['type'] )->renderVerificationBox(
             $record->get( 'form_settings' )['id']

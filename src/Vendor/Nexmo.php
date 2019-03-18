@@ -18,7 +18,7 @@ class Nexmo extends Base {
     protected static $credentials;
 
     protected static $request_id;
-    
+
     public function getClient() {
         if ( is_null( self::$client ) ) {
             self::$client = new Client( new Container( $this->getCredentials() ) );
@@ -32,7 +32,7 @@ class Nexmo extends Base {
         }
         return self::$credentials;
     }
-    
+
     public static function getApiKey() {
         return get_option( self::OPTION_NAME_API_KEY );
     }
@@ -45,7 +45,7 @@ class Nexmo extends Base {
         self::$request_id = $request_id;
         return $this;
     }
-    
+
     public function getRequestId() {
         return self::$request_id;
     }
@@ -57,7 +57,7 @@ class Nexmo extends Base {
         } catch ( Exception $e ) {
             return $this->error( $e->getMessage() );
         }
-        
+
         $this->setRequestId( $verification->getRequestId() );
     }
 
@@ -74,10 +74,10 @@ class Nexmo extends Base {
         self::$errors->add( 'nexmo', __( $message, 'elementor-otp' ) );
         return false;
     }
-    
+
     public function submit( $component ) {
         $openVerificationBox = true;
-        
+
         // Check verification code
         if ( ! empty( $_POST['otp-code'] ) && ! empty( $_POST['otp-token'] ) ) {
             $request_id = sanitize_text_field( $_POST['otp-token'] );
@@ -88,11 +88,11 @@ class Nexmo extends Base {
             } else {
                 return;
             }
-        
+
         } elseif ( ! empty( $_POST['otp-token'] ) ) {
-            
+
             $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
-            
+
         // Send verification code
         } else {
             $this->send( $component['value'] );
@@ -113,5 +113,5 @@ class Nexmo extends Base {
             'verify'  => $openVerificationBox,
         ] );
     }
-    
+
 }

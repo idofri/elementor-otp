@@ -5,7 +5,7 @@ use Authy\AuthyApi;
 use Authy\AuthyResponse;
 
 class Authy extends AuthyApi {
-    
+
     public function phoneVerificationStatus( $uuid )
     {
         $resp = $this->rest->get("protected/json/phones/verification/status", array_merge(
@@ -19,5 +19,5 @@ class Authy extends AuthyApi {
 
         return new AuthyResponse($resp);
     }
-    
+
 }
