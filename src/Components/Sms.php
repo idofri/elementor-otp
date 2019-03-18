@@ -37,7 +37,9 @@ class Sms extends Tel {
 
         $form->add_render_attribute( 'token' . $item_index, 'type', 'hidden' );
 		$form->add_render_attribute( 'token' . $item_index, 'name', 'otp-token' );
-		echo '<input ' . $form->get_render_attribute_string( 'token' . $item_index ) . '>';
+        echo '<input ' . $form->get_render_attribute_string( 'token' . $item_index ) . '>';
+
+        do_action( 'elementor_otp/components/sms/render', $item, $item_index, $form, $this );
     }
 
     public function renderVerificationBox( $form_id ) {

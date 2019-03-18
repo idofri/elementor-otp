@@ -18,31 +18,28 @@ class ElementorOTP {
 
     public $version = '1.0.0';
 
-    protected static $_components = [];
+    protected static $components = [];
 
     public function getComponent( $type ) {
-        return self::$_components[ $type ] ?? false;
-    }
-
-    public function getAllComponents() {
-        return self::$_components;
-    }
-
-    public function getComponentTypes() {
-        return array_keys( $this->getAllComponents() );
+        return self::$components[ $type ] ?? false;
     }
 
     public function addComponent( $component ) {
-        self::$_components[ $component->get_type() ] = $component;
+        self::$components[ $component->get_type() ] = $component;
         return $this;
+    }
+
+    public function getComponentTypes() {
+        return array_keys( self::$components );
     }
 
     public function __construct() {
         add_action( 'init',               [ $this, 'loadTextDomain' ] );
-        add_action( 'elementor_pro/init', [ $this, 'initHooks' ] );
+        add_action( 'elementor_pro/init', [ $this, 'setupHooks' ] );
     }
 
-    public function initHooks() {
+    public function setupHooks() {
+        add_action( 'elementor_otp/init',                           [ $this, 'addComponents' ] );
         add_action( 'elementor_pro/forms/validation',               [ $this, 'otpValidation' ], 10, 2 );
         add_action( 'elementor/frontend/after_register_styles',     [ $this, 'registerStyles' ] );
         add_action( 'elementor/frontend/after_register_scripts',    [ $this, 'registerScripts' ] );
@@ -51,7 +48,7 @@ class ElementorOTP {
             add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'registerAdminFields' ] );
         }
 
-        $this->addOtpComponents();
+        do_action( 'elementor_otp/init' );
     }
 
     public function registerAdminFields( Settings $settings ) {
@@ -90,6 +87,8 @@ class ElementorOTP {
                 ]
             ]
         ] );
+
+        do_action( 'elementor_otp/admin/settings', $settings, $this );
     }
 
     public function registerStyles() {
@@ -106,17 +105,18 @@ class ElementorOTP {
         load_plugin_textdomain( 'elementor-otp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     }
 
-    public function addOtpComponents() {
-        $smsComponent = new Elementor\OTP\Components\Sms();
-        $this->addComponent( $smsComponent );
+    public function addComponents() {
+        $components = apply_filters( 'elementor_otp/components', [
+            new Elementor\OTP\Components\Sms()
+        ] );
 
-        Plugin::instance()
-            ->modules_manager
-            ->get_modules( 'forms' )
-            ->add_component( $smsComponent->get_name(), $smsComponent );
+        foreach ( $components as $component ) {
+            $this->addComponent( $component );
+            Plugin::instance()->modules_manager->get_modules( 'forms' )->add_component( $component->get_name(), $component );
+        }
     }
 
-    public function getOtpComponent( Form_Record $record ) {
+    public function hasComponent( Form_Record $record ) {
         $fields = $record->get( 'fields' );
 
         foreach ( $fields as $field ) {
@@ -128,7 +128,7 @@ class ElementorOTP {
         return false;
     }
 
-    public function getOtpVendor( Form_Record $record ) {
+    public function getVendor( Form_Record $record ) {
         $fields = $record->get_form_settings( 'form_fields' );
 
         foreach ( $fields as $field ) {
@@ -136,11 +136,12 @@ class ElementorOTP {
                 continue;
             }
 
-            $className = ucfirst( $field['otp_vendor'] );
-            $className = "Elementor\\OTP\\Vendor\\{$className}";
+            $vendor = ucfirst( $field['otp_vendor'] );
+            $vendor = "Elementor\\OTP\\Vendor\\{$vendor}";
+            $vendor = apply_filters( 'elementor_otp/submit/vendor', $vendor, $record );
 
-            if ( class_exists( $className ) ) {
-                return new $className();
+            if ( class_exists( $vendor ) ) {
+                return new $vendor;
             }
         }
 
@@ -154,13 +155,13 @@ class ElementorOTP {
         }
 
         // Component
-        $component = $this->getOtpComponent( $record );
+        $component = $this->hasComponent( $record );
         if ( ! $component ) {
             return;
         }
 
         // Vendor
-        $vendor = $this->getOtpVendor( $record );
+        $vendor = $this->getVendor( $record );
         if ( ! $vendor ) {
             return;
         }
