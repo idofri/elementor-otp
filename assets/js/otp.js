@@ -1,6 +1,6 @@
 jQuery( function( $ ) {
 
-    function formSubmit( event, xhr, settings ) {
+    function formSubmit( event, xhr ) {
 
         if ( xhr.responseJSON.data && ! xhr.responseJSON.data.verify ) {
             return;
