@@ -31,8 +31,8 @@ class Sms extends Field_Base {
     public function render( $item, $item_index, $form ) {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
         $form->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
-		$form->add_render_attribute( 'input' . $item_index, 'pattern', '[0-9()#&+*-=.\s]+' );
-		$form->add_render_attribute( 'input' . $item_index, 'title', __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
+        $form->add_render_attribute( 'input' . $item_index, 'pattern', '[0-9()#&+*-=.\s]+' );
+        $form->add_render_attribute( 'input' . $item_index, 'title', __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
         if ( ! empty( $item['sms_pattern'] ) ) {
             $form->set_render_attribute( 'input' . $item_index, 'data-mask', $item['sms_pattern'] );
             $form->set_render_attribute( 'input' . $item_index, 'pattern', '[0-9()#&+*-=.\s]+' );
@@ -40,11 +40,11 @@ class Sms extends Field_Base {
         echo '<input size="1" ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
 
         $form->add_render_attribute( 'code' . $item_index, 'type', 'hidden' );
-		$form->add_render_attribute( 'code' . $item_index, 'name', 'otp-code' );
+        $form->add_render_attribute( 'code' . $item_index, 'name', 'otp-code' );
         echo '<input ' . $form->get_render_attribute_string( 'code' . $item_index ) . '>';
 
         $form->add_render_attribute( 'token' . $item_index, 'type', 'hidden' );
-		$form->add_render_attribute( 'token' . $item_index, 'name', 'otp-token' );
+        $form->add_render_attribute( 'token' . $item_index, 'name', 'otp-token' );
         echo '<input ' . $form->get_render_attribute_string( 'token' . $item_index ) . '>';
 
         do_action( 'elementor_otp/components/sms/render', $item, $item_index, $form, $this );
