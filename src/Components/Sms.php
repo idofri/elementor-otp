@@ -1,11 +1,11 @@
 <?php
 namespace Elementor\OTP\Components;
 
-use Elementor\Controls_Manager;
 use ElementorPro\Plugin;
-use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
-use ElementorPro\Modules\Forms\Classes\Form_Record;
+use Elementor\Controls_Manager;
 use ElementorPro\Modules\Forms\Fields\Field_Base;
+use ElementorPro\Modules\Forms\Classes\Form_Record;
+use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 
 class Sms extends Field_Base {
 

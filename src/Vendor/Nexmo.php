@@ -3,9 +3,9 @@ namespace Elementor\OTP\Vendor;
 
 use Exception;
 use Nexmo\Client;
+use Nexmo\Verify\Verification;
 use Nexmo\Client\Credentials\Basic;
 use Nexmo\Client\Credentials\Container;
-use Nexmo\Verify\Verification;
 
 class Nexmo extends Base {
 

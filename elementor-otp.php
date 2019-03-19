@@ -10,8 +10,8 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\Forms\Classes\Form_Record;
 
 class ElementorOTP {
 
