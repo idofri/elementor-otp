@@ -5,11 +5,12 @@ use Elementor\Controls_Manager;
 use ElementorPro\Plugin;
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
-use ElementorPro\Modules\Forms\Fields\Tel;
+use ElementorPro\Modules\Forms\Fields\Field_Base;
 
-class Sms extends Tel {
+class Sms extends Field_Base {
 
     public $depended_scripts = [
+        'jquery-mask',
         'featherlight',
         'elementor-otp'
     ];
@@ -29,7 +30,14 @@ class Sms extends Tel {
 
     public function render( $item, $item_index, $form ) {
         $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
-        parent::render( $item, $item_index, $form );
+        $form->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
+		$form->add_render_attribute( 'input' . $item_index, 'pattern', '[0-9()#&+*-=.\s]+' );
+		$form->add_render_attribute( 'input' . $item_index, 'title', __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
+        if ( ! empty( $item['sms_pattern'] ) ) {
+            $form->set_render_attribute( 'input' . $item_index, 'data-mask', $item['sms_pattern'] );
+            $form->set_render_attribute( 'input' . $item_index, 'pattern', '[0-9()#&+*-=.\s]+' );
+        }
+        echo '<input size="1" ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
 
         $form->add_render_attribute( 'code' . $item_index, 'type', 'hidden' );
 		$form->add_render_attribute( 'code' . $item_index, 'name', 'otp-code' );
@@ -90,8 +98,8 @@ class Sms extends Tel {
         ];
 
         $field_controls = [
-            'otp_vendor' => [
-                'name' => 'otp_vendor',
+            'sms_vendor' => [
+                'name' => 'sms_vendor',
                 'label' => __( 'Vendor', 'elementor-otp' ),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'twilio',
@@ -101,6 +109,18 @@ class Sms extends Tel {
                 'options' => [
                     'twilio' => __( 'Twilio', 'elementor-otp' ),
                     'nexmo' => __( 'Nexmo', 'elementor-otp' ),
+                ],
+                'tab' => 'content',
+                'inner_tab' => 'form_fields_content_tab',
+                'tabs_wrapper' => 'form_fields_tabs',
+            ],
+            'sms_pattern' => [
+                'name' => 'sms_pattern',
+                'label' => __( 'Pattern', 'elementor-otp' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => '(000) 000-0000',
+                'condition' => [
+                    'field_type' => $this->get_type(),
                 ],
                 'tab' => 'content',
                 'inner_tab' => 'form_fields_content_tab',

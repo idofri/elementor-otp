@@ -47,4 +47,12 @@ jQuery( function( $ ) {
         }
     } );
 
+    // jQuery Mask
+    $( '[data-mask]' ).each( function() {
+        $( this ).css( {
+            'direction': 'ltr',
+            'text-align': $( 'body' ).hasClass( 'rtl' ) ? 'right' : 'left'
+        } ).mask( $( this ).attr( 'data-mask' ) );
+    } );
+
 } );

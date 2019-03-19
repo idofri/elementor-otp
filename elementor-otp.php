@@ -51,12 +51,13 @@ class ElementorOTP {
     }
 
     public function registerStyles() {
-        wp_register_style( 'featherlight', plugins_url( '/assets/lib/featherlight/featherlight.css', __FILE__ ), [], '1.7.13' );
+        wp_register_style( 'featherlight', plugins_url( '/assets/lib/featherlight/featherlight.min.css', __FILE__ ), [], '1.7.6' );
         wp_register_style( 'elementor-otp', plugins_url( '/assets/css/otp.css', __FILE__ ), [], $this->version );
     }
 
     public function registerScripts() {
-        wp_register_script( 'featherlight', plugins_url( '/assets/lib/featherlight/featherlight.js', __FILE__ ), [ 'jquery' ], '1.7.13', true );
+        wp_register_script( 'jquery-mask', plugins_url( '/assets/js/jquery.mask.min.js', __FILE__ ), [ 'jquery' ], '1.14.15', true );
+        wp_register_script( 'featherlight', plugins_url( '/assets/lib/featherlight/featherlight.min.js', __FILE__ ), [ 'jquery' ], '1.7.6', true );
         wp_register_script( 'elementor-otp', plugins_url( '/assets/js/otp.js', __FILE__ ), [ 'featherlight' ], $this->version, true );
     }
 
