@@ -3,13 +3,13 @@ namespace Elementor\OTP\Vendor;
 
 class Twilio extends Base {
 
-    const VIA_METHOD = 'sms';
-
     const COUNTRY_CODE = 972;
 
     const OPTION_NAME_API_KEY = 'elementor_otp_twilio_api_key';
 
-    private $uuid;
+    protected static $via = 'sms';
+
+    protected static $uuid;
 
     protected static $client;
 
@@ -24,17 +24,26 @@ class Twilio extends Base {
         return get_option( self::OPTION_NAME_API_KEY );
     }
 
+    public function setViaMethod( $via) {
+        self::$via = $via;
+        return $this;
+    }
+
+    public function getViaMethod() {
+        return self::$via;
+    }
+
     public function setUuid( $uuid ) {
-        $this->uuid = $uuid;
+        self::$uuid = $uuid;
         return $this;
     }
 
     public function getUuid() {
-        return $this->uuid;
+        return self::$uuid;
     }
 
     public function send( $phone_number ) {
-        $res = $this->getClient()->phoneVerificationStart( $phone_number, self::COUNTRY_CODE, self::VIA_METHOD );
+        $res = $this->getClient()->phoneVerificationStart( $phone_number, self::COUNTRY_CODE, $this->getViaMethod() );
 
         if ( $res->ok() ) {
             $this->setUuid( $res->bodyvar( 'uuid' ) );
