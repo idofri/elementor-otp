@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-03-14 17:41+0200\n"
+"POT-Creation-Date: 2019-03-19 22:08+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,60 +18,78 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
-"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,"
-"_nc:4c,1,2\n"
+"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 1.8.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: elementor-otp.php:58
+#: src/Admin.php:15
 msgid "Twilio Verify"
 msgstr "Twilio Verify"
 
-#: elementor-otp.php:62
+#: src/Admin.php:19 src/Admin.php:34
 msgid "API Key"
 msgstr "מפתח API"
 
-#: elementor-otp.php:65
+#: src/Admin.php:22 src/Admin.php:43
 #, php-format
 msgid ""
-"You must create a <a href=\"%s\">new Verify application under your Twilio "
-"account</a> and put its API key here."
+"To integrate with our forms you need an <a href=\"%s\" target=\"_blank\">API "
+"Key</a>."
 msgstr ""
-"עליך ליצור <a href=\"%s\">אפליקציית אימות חדשה תחת חשבון ה-Twilio שלך</a> "
-"ולשים את מפתח ה- API שלה כאן."
+"כדי לשלב עם הטפסים שלנו, אתה צריך <a href=\"%s\" target=\"_blank\">מפתח API</"
+"a> ."
 
-#: elementor-otp.php:186 src/Vendor/Nexmo.php:95
-msgid "Awaiting verification."
-msgstr "ממתין לאימות."
+#: src/Admin.php:30 src/Components/Sms.php:111
+msgid "Nexmo"
+msgstr "Nexmo"
 
-#: src/Components/Sms.php:27
+#: src/Admin.php:40
+msgid "API Secret"
+msgstr "סוד API"
+
+#: src/Components/Sms.php:28
 msgid "SMS Verification"
 msgstr "אימות SMS"
 
-#: src/Components/Sms.php:49
+#: src/Components/Sms.php:35
+msgid "Only numbers and phone characters (#, -, *, etc) are accepted."
+msgstr "רק מספרים ותווי טלפון (#, -, *, וכו ') מתקבלים."
+
+#: src/Components/Sms.php:59
 msgid "Please type the verification code sent to you."
 msgstr "הזן את קוד האימות שנשלח אליך."
 
-#: src/Components/Sms.php:51
+#: src/Components/Sms.php:61
 msgid "Enter code"
 msgstr "הכנס קוד"
 
-#: src/Components/Sms.php:55
+#: src/Components/Sms.php:65
 msgid "Verify"
 msgstr "אימות"
 
-#: src/Components/Sms.php:93
+#: src/Components/Sms.php:103
 msgid "Vendor"
 msgstr "ספק"
 
-#: src/Components/Sms.php:100
+#: src/Components/Sms.php:110
 msgid "Twilio"
 msgstr "Twilio"
 
-#: src/Components/Sms.php:101
-msgid "Nexmo"
-msgstr ""
+#: src/Components/Sms.php:119
+msgid "Pattern"
+msgstr "תבנית"
+
+#: src/Vendor/Nexmo.php:94 src/Vendor/Nexmo.php:103 src/Vendor/Twilio.php:118
+msgid "Awaiting verification."
+msgstr "ממתין לאימות."
+
+#~ msgid ""
+#~ "You must create a <a href=\"%s\">new Verify application under your Twilio "
+#~ "account</a> and put its API key here."
+#~ msgstr ""
+#~ "עליך ליצור <a href=\"%s\">אפליקציית אימות חדשה תחת חשבון ה-Twilio שלך</a> "
+#~ "ולשים את מפתח ה- API שלה כאן."
 
 #~ msgid "OTP"
 #~ msgstr "OTP"
