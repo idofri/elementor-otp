@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-03-19 22:08+0200\n"
+"POT-Creation-Date: 2019-03-20 12:53+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: src/Admin.php:15
@@ -76,7 +76,11 @@ msgstr "ספק"
 msgid "Twilio"
 msgstr "Twilio"
 
-#: src/Components/Sms.php:119
+#: src/Components/Sms.php:118
+msgid "Country"
+msgstr "מדינה"
+
+#: src/Components/Sms.php:128
 msgid "Pattern"
 msgstr "תבנית"
 
