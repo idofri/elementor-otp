@@ -38,10 +38,10 @@ class ElementorOTP {
     }
 
     public function setupHooks() {
-        add_action( 'elementor_otp/init',                           [ $this, 'addComponents' ] );
-        add_action( 'elementor_pro/forms/validation',               [ $this, 'otpValidation' ], 10, 2 );
-        add_action( 'elementor/frontend/after_register_styles',     [ $this, 'registerStyles' ] );
-        add_action( 'elementor/frontend/after_register_scripts',    [ $this, 'registerScripts' ] );
+        add_action( 'elementor_otp/init',                        [ $this, 'addComponents' ] );
+        add_action( 'elementor_pro/forms/validation',            [ $this, 'otpValidation' ], 10, 2 );
+        add_action( 'elementor/frontend/after_register_styles',  [ $this, 'registerStyles' ] );
+        add_action( 'elementor/frontend/after_register_scripts', [ $this, 'registerScripts' ] );
 
         if ( is_admin() ) {
             new Elementor\OTP\Admin();
