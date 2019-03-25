@@ -12,12 +12,12 @@ class Sms extends Field_Base {
     public $depended_scripts = [
         'jquery-mask',
         'featherlight',
-        'elementor-otp'
+        'elementor-otp-frontend'
     ];
 
     public $depended_styles = [
         'featherlight',
-        'elementor-otp'
+        'elementor-otp-frontend'
     ];
 
     public function get_type() {
@@ -33,9 +33,8 @@ class Sms extends Field_Base {
         $form->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
         $form->add_render_attribute( 'input' . $item_index, 'pattern', '[0-9()#&+*-=.\s]+' );
         $form->add_render_attribute( 'input' . $item_index, 'title', __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
-        if ( ! empty( $item['sms_pattern'] ) ) {
-            $form->set_render_attribute( 'input' . $item_index, 'data-mask', $item['sms_pattern'] );
-            $form->set_render_attribute( 'input' . $item_index, 'pattern', '[0-9()#&+*-=.\s]+' );
+        if ( ! empty( $item['mask'] ) ) {
+            $form->set_render_attribute( 'input' . $item_index, 'data-mask', $item['mask'] );
         }
         echo '<input size="1" ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
 
@@ -98,8 +97,8 @@ class Sms extends Field_Base {
         ];
 
         $field_controls = [
-            'sms_vendor' => [
-                'name' => 'sms_vendor',
+            'vendor' => [
+                'name' => 'vendor',
                 'label' => __( 'Vendor', 'elementor-otp' ),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'twilio',
@@ -114,8 +113,8 @@ class Sms extends Field_Base {
                 'inner_tab' => 'form_fields_content_tab',
                 'tabs_wrapper' => 'form_fields_tabs',
             ],
-            'sms_pattern' => [
-                'name' => 'sms_pattern',
+            'mask' => [
+                'name' => 'mask',
                 'label' => __( 'Pattern', 'elementor-otp' ),
                 'type' => Controls_Manager::TEXT,
                 'default' => '(000) 000-0000',

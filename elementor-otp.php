@@ -38,10 +38,11 @@ class ElementorOTP {
     }
 
     public function setupHooks() {
-        add_action( 'elementor_otp/init',                           [ $this, 'addComponents' ] );
-        add_action( 'elementor_pro/forms/validation',               [ $this, 'otpValidation' ], 10, 2 );
-        add_action( 'elementor/frontend/after_register_styles',     [ $this, 'registerStyles' ] );
-        add_action( 'elementor/frontend/after_register_scripts',    [ $this, 'registerScripts' ] );
+        add_action( 'elementor_otp/init',                        [ $this, 'addComponents' ] );
+        add_action( 'elementor_pro/forms/validation',            [ $this, 'otpValidation' ], 10, 2 );
+        add_action( 'elementor/frontend/after_register_styles',  [ $this, 'frontRegisterStyles' ] );
+        add_action( 'elementor/frontend/after_register_scripts', [ $this, 'frontRegisterScripts' ] );
+        add_action( 'elementor/editor/after_enqueue_scripts',    [ $this, 'editorEnqueueScripts' ] );
 
         if ( is_admin() ) {
             new Elementor\OTP\Admin();
@@ -50,15 +51,70 @@ class ElementorOTP {
         do_action( 'elementor_otp/init' );
     }
 
-    public function registerStyles() {
-        wp_register_style( 'featherlight', plugins_url( '/assets/lib/featherlight/featherlight.min.css', __FILE__ ), [], '1.7.6' );
-        wp_register_style( 'elementor-otp', plugins_url( '/assets/css/otp.css', __FILE__ ), [], $this->version );
+    public function frontRegisterStyles() {
+        $suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+        wp_register_style(
+            'featherlight',
+            plugins_url( '/assets/lib/featherlight/featherlight' . $suffix . '.css', __FILE__ ),
+            [],
+            '1.7.6'
+        );
+
+        wp_register_style(
+            'elementor-otp-frontend',
+            plugins_url( '/assets/css/frontend.css', __FILE__ ),
+            [],
+            $this->version
+        );
     }
 
-    public function registerScripts() {
-        wp_register_script( 'jquery-mask', plugins_url( '/assets/js/jquery.mask.min.js', __FILE__ ), [ 'jquery' ], '1.14.15', true );
-        wp_register_script( 'featherlight', plugins_url( '/assets/lib/featherlight/featherlight.min.js', __FILE__ ), [ 'jquery' ], '1.7.6', true );
-        wp_register_script( 'elementor-otp', plugins_url( '/assets/js/otp.js', __FILE__ ), [ 'featherlight' ], $this->version, true );
+    public function frontRegisterScripts() {
+        $suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+        wp_register_script(
+            'jquery-mask',
+            plugins_url( '/assets/js/jquery.mask' . $suffix . '.js', __FILE__ ),
+            [ 'jquery' ],
+            '1.14.15',
+            true
+        );
+
+        wp_register_script(
+            'featherlight',
+            plugins_url( '/assets/lib/featherlight/featherlight' . $suffix . '.js', __FILE__ ),
+            [ 'jquery' ],
+            '1.7.6',
+            true
+        );
+
+        wp_register_script(
+            'elementor-otp-frontend',
+            plugins_url( '/assets/js/frontend' . $suffix . '.js', __FILE__ ),
+            [ 'jquery' ],
+            '1.7.6',
+            true
+        );
+    }
+
+    public function editorEnqueueScripts() {
+        $suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+        wp_enqueue_script(
+            'jquery-mask',
+            plugins_url( '/assets/js/jquery.mask' . $suffix . '.js', __FILE__ ),
+            [ 'jquery' ],
+            '1.14.15',
+            true
+        );
+
+        wp_enqueue_script(
+            'elementor-otp-editor',
+            plugins_url( '/assets/js/editor' . $suffix . '.js', __FILE__ ),
+            [ 'elementor-pro' ],
+            $this->version,
+            true
+        );
     }
 
     public function loadTextDomain() {
