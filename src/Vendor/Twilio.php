@@ -101,7 +101,7 @@ class Twilio extends Base {
                 $errorMessage = $this->getErrorMessage();
 
                 // Invalid UUID - resend verification code
-                $this->clearErrors()->send( $component['value'], 972 );
+                $this->clearErrors()->send( $component['value'] );
                 if ( $this->hasErrors() ) {
                     $openVerificationBox = false;
                     $errorMessage = $this->getErrorMessage();
@@ -110,7 +110,7 @@ class Twilio extends Base {
 
         // Send verification code
         } else {
-            $this->send( $component['value'], 972 );
+            $this->send( $component['value'] );
             if ( $this->hasErrors() ) {
                 $openVerificationBox = false;
                 $errorMessage = $this->getErrorMessage();
