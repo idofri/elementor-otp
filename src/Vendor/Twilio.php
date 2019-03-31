@@ -82,6 +82,7 @@ class Twilio extends Base {
 
     public function submit( $component ) {
         $openVerificationBox = true;
+        $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
 
         // Check verification code
         if ( ! empty( $_POST['otp-code'] ) ) {
@@ -114,8 +115,6 @@ class Twilio extends Base {
             if ( $this->hasErrors() ) {
                 $openVerificationBox = false;
                 $errorMessage = $this->getErrorMessage();
-            } else {
-                $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
             }
         }
 
@@ -123,7 +122,6 @@ class Twilio extends Base {
             'message' => $errorMessage,
             'errors'  => [],
             'data'    => [],
-            'html'    => $this->getHtml(),
             'token'   => $this->getUuid(),
             'verify'  => $openVerificationBox,
         ] );

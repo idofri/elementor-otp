@@ -55,13 +55,6 @@ class ElementorOTP {
         $suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
         wp_register_style(
-            'featherlight',
-            plugins_url( '/assets/lib/featherlight/featherlight' . $suffix . '.css', __FILE__ ),
-            [],
-            '1.7.6'
-        );
-
-        wp_register_style(
             'elementor-otp-frontend',
             plugins_url( '/assets/css/frontend.css', __FILE__ ),
             [],
@@ -77,14 +70,6 @@ class ElementorOTP {
             plugins_url( '/assets/js/jquery.mask' . $suffix . '.js', __FILE__ ),
             [ 'jquery' ],
             '1.14.15',
-            true
-        );
-
-        wp_register_script(
-            'featherlight',
-            plugins_url( '/assets/lib/featherlight/featherlight' . $suffix . '.js', __FILE__ ),
-            [ 'jquery' ],
-            '1.7.6',
             true
         );
 
@@ -152,7 +137,7 @@ class ElementorOTP {
                 continue;
             }
 
-            $vendor = ucfirst( $field['otp_vendor'] );
+            $vendor = ucfirst( $field['vendor'] );
             $vendor = "Elementor\\OTP\\Vendor\\{$vendor}";
             $vendor = apply_filters( 'elementor_otp/submit/vendor', $vendor, $record );
 
@@ -183,9 +168,7 @@ class ElementorOTP {
         }
 
         // Handle submission
-        $vendor->setHtml( $this->getComponent( $component['type'] )->renderVerificationBox(
-            $record->get( 'form_settings' )['id']
-        ) )->submit( $component );
+        $vendor->submit( $component );
     }
 
 }

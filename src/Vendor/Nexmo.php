@@ -108,7 +108,6 @@ class Nexmo extends Base {
             'message' => $errorMessage,
             'errors'  => [],
             'data'    => [],
-            'html'    => $this->getHtml(),
             'token'   => $this->getRequestId(),
             'verify'  => $openVerificationBox,
         ] );

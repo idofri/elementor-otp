@@ -1,7 +1,3 @@
-.elementor .featherlight-content {
-    max-width: 320px;
-	
-	label {
-		font-size: .9em;
-	}
+.elementor-field[data-sms]:disabled {
+	color: #a4afb7;
 }
