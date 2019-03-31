@@ -40,9 +40,9 @@ class ElementorOTP {
     public function setupHooks() {
         add_action( 'elementor_otp/init',                        [ $this, 'addComponents' ] );
         add_action( 'elementor_pro/forms/validation',            [ $this, 'otpValidation' ], 10, 2 );
+        add_action( 'elementor/editor/after_enqueue_scripts',    [ $this, 'editorEnqueueScripts' ] );
         add_action( 'elementor/frontend/after_register_styles',  [ $this, 'frontRegisterStyles' ] );
         add_action( 'elementor/frontend/after_register_scripts', [ $this, 'frontRegisterScripts' ] );
-        add_action( 'elementor/editor/after_enqueue_scripts',    [ $this, 'editorEnqueueScripts' ] );
 
         if ( is_admin() ) {
             new Elementor\OTP\Admin();
