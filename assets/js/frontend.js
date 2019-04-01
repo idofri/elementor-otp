@@ -18,7 +18,8 @@ jQuery( function( $ ) {
 
         if ( 'hidden' === $otpCode.attr( 'type' ) ) {
             $otpCode.attr( 'type', 'text' );
-            $otpSms.prop( 'disabled', true );
+            $otpSms.prop( 'readonly', true );
+            $( '<div class="elementor-field-group"></div>' ).insertAfter( $otpSms );
         }
 
         // $.featherlight( xhr.responseJSON.data.html, {
@@ -55,10 +56,7 @@ jQuery( function( $ ) {
 
     // jQuery Mask
     $( '[data-mask]' ).each( function() {
-        $( this ).css( {
-            'direction': 'ltr',
-            'text-align': $( 'body' ).hasClass( 'rtl' ) ? 'right' : 'left'
-        } ).mask( $( this ).attr( 'data-mask' ) );
+        $( this ).mask( $( this ).attr( 'data-mask' ) );
     } );
 
 } );

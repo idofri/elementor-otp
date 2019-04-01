@@ -1,3 +1,2 @@
-.elementor-field[data-sms]:disabled{color:#a4afb7}
-
+.elementor-field[data-sms]{direction:ltr;text-align:right}.elementor-field[data-sms][readonly]{color:#a4afb7}
 /*# sourceMappingURL=frontend.css.map */

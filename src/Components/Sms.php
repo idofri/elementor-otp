@@ -29,25 +29,32 @@ class Sms extends Field_Base {
     }
 
     public function render( $item, $item_index, $form ) {
-        $form->set_render_attribute( 'input' . $item_index, 'type', 'tel' );
-        $form->add_render_attribute( 'input' . $item_index, 'data-sms', true );
-        $form->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
-        $form->add_render_attribute( 'input' . $item_index, 'pattern', '[0-9()#&+*-=.\s]+' );
-        $form->add_render_attribute( 'input' . $item_index, 'title', __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
+        $elementSms = 'input' . $item_index;
+        $elementCode = 'code' . $item_index;
+        $elementToken = 'token' . $item_index;
+
+        // SMS
+        $form->set_render_attribute( $elementSms, 'type', 'tel' );
+        $form->add_render_attribute( $elementSms, 'data-sms', true );
+        $form->add_render_attribute( $elementSms, 'class', 'elementor-field-textual' );
+        $form->add_render_attribute( $elementSms, 'pattern', '[0-9()#&+*-=.\s]+' );
+        $form->add_render_attribute( $elementSms, 'title', __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
         if ( ! empty( $item['mask'] ) ) {
-            $form->set_render_attribute( 'input' . $item_index, 'data-mask', $item['mask'] );
+            $form->set_render_attribute( $elementSms, 'data-mask', $item['mask'] );
         }
-        echo '<input size="1" ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
+        echo '<input size="1" ' . $form->get_render_attribute_string( $elementSms ) . '>';
 
-        $form->add_render_attribute( 'code' . $item_index, 'type', 'hidden' );
-        $form->add_render_attribute( 'code' . $item_index, 'class', 'elementor-field elementor-size-sm elementor-field-textual' );
-        $form->add_render_attribute( 'code' . $item_index, 'placeholder', __( 'Enter code', 'elementor-otp' ) );
-        $form->add_render_attribute( 'code' . $item_index, 'name', 'otp-code' );
-        echo '<input ' . $form->get_render_attribute_string( 'code' . $item_index ) . '>';
+        // Code
+        $form->add_render_attribute( $elementCode, 'type', 'hidden' );
+        $form->add_render_attribute( $elementCode, 'class', $form->get_render_attributes( $elementSms, 'class' ) );
+        $form->add_render_attribute( $elementCode, 'placeholder', __( 'Enter code', 'elementor-otp' ) );
+        $form->add_render_attribute( $elementCode, 'name', 'otp-code' );
+        echo '<input ' . $form->get_render_attribute_string( $elementCode ) . '>';
 
-        $form->add_render_attribute( 'token' . $item_index, 'type', 'hidden' );
-        $form->add_render_attribute( 'token' . $item_index, 'name', 'otp-token' );
-        echo '<input ' . $form->get_render_attribute_string( 'token' . $item_index ) . '>';
+        // Token
+        $form->add_render_attribute( $elementToken, 'type', 'hidden' );
+        $form->add_render_attribute( $elementToken, 'name', 'otp-token' );
+        echo '<input ' . $form->get_render_attribute_string( $elementToken ) . '>';
 
         do_action( 'elementor_otp/components/sms/render', $item, $item_index, $form, $this );
     }
