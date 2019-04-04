@@ -52,8 +52,6 @@ class ElementorOTP {
     }
 
     public function frontRegisterStyles() {
-        $suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
         wp_register_style(
             'elementor-otp-frontend',
             plugins_url( '/assets/css/frontend.css', __FILE__ ),

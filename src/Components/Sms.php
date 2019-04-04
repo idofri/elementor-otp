@@ -11,12 +11,10 @@ class Sms extends Field_Base {
 
     public $depended_scripts = [
         'jquery-mask',
-        'featherlight',
         'elementor-otp-frontend'
     ];
 
     public $depended_styles = [
-        'featherlight',
         'elementor-otp-frontend'
     ];
 

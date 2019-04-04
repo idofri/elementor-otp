@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAIA,0BAA2B,CACvB,SAAS,CAAE,GAAG,CACd,UAAU,CAAE,KAAK,CACjB,oCAAY,CACR,KAAK,CAAE,OAAO",
+"mappings": "AAAA,0BAA2B,CACvB,SAAS,CAAE,GAAG,CACd,UAAU,CAAE,KAAK,CACjB,oCAAY,CACR,KAAK,CAAE,OAAO",
 "sources": ["frontend.scss"],
 "names": [],
 "file": "frontend.css"

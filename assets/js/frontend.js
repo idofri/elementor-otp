@@ -22,20 +22,6 @@ jQuery( function( $ ) {
             $( '<div class="elementor-field-group"></div>' ).insertAfter( $otpSms );
         }
 
-        // $.featherlight( xhr.responseJSON.data.html, {
-        //     root: '.elementor-2',
-        //     closeIcon: '',
-        //     otherClose: '.elementor-button',
-        //     beforeClose: function( event ) {
-        //         if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {
-        //             return;
-        //         }
-
-        //         $otpCode.val( $( event.currentTarget ).find( '.otp-code' ).val() );
-        //         $form.trigger( 'submit' );
-        //     }
-        // } );
-
     }
 
     $( 'form.elementor-form' ).ajaxSuccess( formSubmit );
@@ -48,6 +34,16 @@ jQuery( function( $ ) {
     } );
 
     $( 'form.elementor-form' ).on( 'submit_success', function( event ) {
+        var $otpSms = $( event.target ).find( '[data-sms]' );
+        if ( $otpSms ) {
+            $otpSms.prop( 'readonly', false );
+        }
+
+        var $otpCode = $( event.target ).find( '[name="otp-code"]' );
+        if ( $otpCode ) {
+            $otpCode.attr( 'type', 'hidden' );
+        }
+
         var $otpToken = $( event.target ).find( '[name="otp-token"]' );
         if ( $otpToken ) {
             $otpToken.val('');
