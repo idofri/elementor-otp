@@ -57,26 +57,6 @@ class Sms extends Field_Base {
         do_action( 'elementor_otp/components/sms/render', $item, $item_index, $form, $this );
     }
 
-    public function renderVerificationBox( $form_id ) {
-        ob_start();
-
-        ?><form class="elementor-element elementor-element-<?= $form_id; ?> elementor-widget-form elementor-button-align-stretch elementor-hidden elementor-otp">
-            <div class="elementor-field-group elementor-align-center">
-                <label for="verification-code">
-                    <?php _e( 'Please type the verification code sent to you.', 'elementor-otp' ); ?>
-                </label>
-                <input type="tel" class="elementor-field-textual elementor-size-sm elementor-align-center otp-code" placeholder="<?php esc_attr_e( 'Enter code', 'elementor-otp' ); ?>" required>
-            </div>
-            <div class="elementor-field-group elementor-field-type-submit elementor-column elementor-col-100">
-                <button type="submit" class="elementor-button elementor-size-sm">
-                    <?php _e( 'Verify', 'elementor-otp' ); ?>
-                </button>
-            </div>
-        </form><?php
-
-        return ob_get_clean();
-    }
-
     public function validation( $field, Form_Record $record, Ajax_Handler $ajax_handler ) {
         if ( '' === $field['value'] ) {
             $ajax_handler->add_error( $field['id'], $ajax_handler::get_default_message( $ajax_handler::FIELD_REQUIRED, $record->get( 'form_settings' ) ) );
