@@ -27,6 +27,16 @@ abstract class Base {
         return reset( $errorMessages );
     }
 
+    public function sendJsonError( $message, $token, $verify ) {
+        wp_send_json_error( [
+            'message' => $message,
+            'errors'  => [],
+            'data'    => [],
+            'token'   => $token,
+            'verify'  => $verify,
+        ] );
+    }
+
     public function __construct() {
         $this->clearErrors();
     }

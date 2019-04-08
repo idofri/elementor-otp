@@ -76,7 +76,7 @@ class Nexmo extends Base {
     }
 
     public function submit( $component ) {
-        $openVerificationBox = true;
+        $verify = true;
 
         // Check verification code
         if ( ! empty( $_POST['otp-code'] ) && ! empty( $_POST['otp-token'] ) ) {
@@ -84,33 +84,27 @@ class Nexmo extends Base {
             $code = sanitize_text_field( $_POST['otp-code'] );
             $this->verify( $request_id, $code );
             if ( $this->hasErrors() ) {
-                $errorMessage = $this->getErrorMessage();
+                $message = $this->getErrorMessage();
             } else {
                 return;
             }
 
         } elseif ( ! empty( $_POST['otp-token'] ) ) {
 
-            $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
+            $message = __( 'Awaiting verification.', 'elementor-otp' );
 
         // Send verification code
         } else {
             $this->send( $component['value'] );
             if ( $this->hasErrors() ) {
-                $openVerificationBox = false;
-                $errorMessage = $this->getErrorMessage();
+                $verify = false;
+                $message = $this->getErrorMessage();
             } else {
-                $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
+                $message = __( 'Awaiting verification.', 'elementor-otp' );
             }
         }
 
-        wp_send_json_error( [
-            'message' => $errorMessage,
-            'errors'  => [],
-            'data'    => [],
-            'token'   => $this->getRequestId(),
-            'verify'  => $openVerificationBox,
-        ] );
+        $this->sendJsonError( $message, $this->getRequestId(), $verify );
     }
 
 }

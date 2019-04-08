@@ -81,15 +81,15 @@ class Twilio extends Base {
     }
 
     public function submit( $component ) {
-        $openVerificationBox = true;
-        $errorMessage = __( 'Awaiting verification.', 'elementor-otp' );
+        $verify = true;
+        $message = __( 'Awaiting verification.', 'elementor-otp' );
 
         // Check verification code
         if ( ! empty( $_POST['otp-code'] ) ) {
             $code = sanitize_text_field( $_POST['otp-code'] );
             $this->verify( $component['value'], $code );
             if ( $this->hasErrors() ) {
-                $errorMessage = $this->getErrorMessage();
+                $message = $this->getErrorMessage();
             } else {
                 return;
             }
@@ -99,13 +99,13 @@ class Twilio extends Base {
             $uuid = sanitize_text_field( $_POST['otp-token'] );
             $this->status( $uuid );
             if ( $this->hasErrors() ) {
-                $errorMessage = $this->getErrorMessage();
+                $message = $this->getErrorMessage();
 
                 // Invalid UUID - resend verification code
                 $this->clearErrors()->send( $component['value'] );
                 if ( $this->hasErrors() ) {
-                    $openVerificationBox = false;
-                    $errorMessage = $this->getErrorMessage();
+                    $verify = false;
+                    $message = $this->getErrorMessage();
                 }
             }
 
@@ -113,18 +113,12 @@ class Twilio extends Base {
         } else {
             $this->send( $component['value'] );
             if ( $this->hasErrors() ) {
-                $openVerificationBox = false;
-                $errorMessage = $this->getErrorMessage();
+                $verify = false;
+                $message = $this->getErrorMessage();
             }
         }
 
-        wp_send_json_error( [
-            'message' => $errorMessage,
-            'errors'  => [],
-            'data'    => [],
-            'token'   => $this->getUuid(),
-            'verify'  => $openVerificationBox,
-        ] );
+        $this->sendJsonError( $message, $this->getUuid(), $verify );
     }
 
 }

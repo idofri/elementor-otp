@@ -65,7 +65,7 @@ class ElementorOTP {
 
         wp_register_script(
             'jquery-mask',
-            plugins_url( '/assets/js/jquery.mask' . $suffix . '.js', __FILE__ ),
+            plugins_url( '/assets/js/jquery.mask.min.js', __FILE__ ),
             [ 'jquery' ],
             '1.14.15',
             true
@@ -74,8 +74,8 @@ class ElementorOTP {
         wp_register_script(
             'elementor-otp-frontend',
             plugins_url( '/assets/js/frontend' . $suffix . '.js', __FILE__ ),
-            [ 'jquery' ],
-            '1.7.6',
+            [ 'jquery', 'jquery-mask' ],
+            $this->version,
             true
         );
     }
@@ -85,7 +85,7 @@ class ElementorOTP {
 
         wp_enqueue_script(
             'jquery-mask',
-            plugins_url( '/assets/js/jquery.mask' . $suffix . '.js', __FILE__ ),
+            plugins_url( '/assets/js/jquery.mask.min.js', __FILE__ ),
             [ 'jquery' ],
             '1.14.15',
             true

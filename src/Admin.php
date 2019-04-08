@@ -12,7 +12,7 @@ class Admin {
     public function registerAdminFields( Settings $settings ) {
         $settings->add_section( Settings::TAB_INTEGRATIONS, 'twilio', [
             'callback' => function() {
-                echo '<hr><h2>' . esc_html__( 'Twilio Verify', 'elementor-otp' ) . '</h2>';
+                echo '<hr><h2>' . esc_html__( 'Twilio', 'elementor-otp' ) . '</h2>';
             },
             'fields' => [
                 'otp_twilio_api_key' => [
