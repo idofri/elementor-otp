@@ -58,9 +58,38 @@ class Sms extends Field_Base {
     }
 
     public function validation( $field, Form_Record $record, Ajax_Handler $ajax_handler ) {
-        if ( '' === $field['value'] ) {
-            $ajax_handler->add_error( $field['id'], $ajax_handler::get_default_message( $ajax_handler::FIELD_REQUIRED, $record->get( 'form_settings' ) ) );
+        if ( empty( $field['value'] ) ) {
+            return;
         }
+        if ( preg_match( '/^[0-9()#&+*-=.\s]+$/', $field['value'] ) !== 1 ) {
+            $ajax_handler->add_error( $field['id'], __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-otp' ) );
+            return;
+        }
+        
+        $vendor = $this->getVendor( $field, $record );
+        if ( ! $vendor ) {
+            return;
+        }
+
+        return $vendor->submit( $field );
+    }
+
+    public function getVendor( $field, Form_Record $record ) {
+        foreach ( $record->get_form_settings( 'form_fields' ) as $form_field ) {
+            if ( $field['id'] !== $form_field['_id'] ) {
+                continue;
+            }
+
+            $vendor = ucfirst( $form_field['vendor'] );
+            $vendor = "Elementor\\OTP\\Vendor\\{$vendor}";
+            $vendor = apply_filters( 'elementor_otp/submit/vendor', $vendor, $field, $form_field, $record );
+
+            if ( class_exists( $vendor ) ) {
+                return new $vendor;
+            }
+        }
+
+        return false;
     }
 
     public function update_controls( $widget ) {
@@ -75,14 +104,6 @@ class Sms extends Field_Base {
         // Placeholder
         $placeholder = $control_data['fields']['placeholder'];
         $placeholder['conditions']['terms'][0]['value'][] = $this->get_type();
-
-        // Required
-        $required = $control_data['fields']['required'];
-        $required['conditions']['terms'][] = [
-            'name' => 'field_type',
-            'operator' => '!in',
-            'value' => [ $this->get_type() ]
-        ];
 
         $field_controls = [
             'vendor' => [
@@ -105,7 +126,7 @@ class Sms extends Field_Base {
                 'name' => 'mask',
                 'label' => __( 'Pattern', 'elementor-otp' ),
                 'type' => Controls_Manager::TEXT,
-                'default' => '(000) 000-0000',
+                'default' => '',
                 'placeholder' => '(000) 000-0000',
                 'condition' => [
                     'field_type' => $this->get_type(),
@@ -114,8 +135,7 @@ class Sms extends Field_Base {
                 'inner_tab' => 'form_fields_content_tab',
                 'tabs_wrapper' => 'form_fields_tabs',
             ],
-            'placeholder' => $placeholder,
-            'required' => $required
+            'placeholder' => $placeholder
         ];
 
         $control_data['fields'] = $this->inject_field_controls( $control_data['fields'], $field_controls );

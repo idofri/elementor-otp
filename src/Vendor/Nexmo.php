@@ -75,8 +75,9 @@ class Nexmo extends Base {
         return false;
     }
 
-    public function submit( $component ) {
+    public function submit( $field ) {
         $verify = true;
+        $message = __( 'Awaiting verification.', 'elementor-otp' );
 
         // Check verification code
         if ( ! empty( $_POST['otp-code'] ) && ! empty( $_POST['otp-token'] ) ) {
@@ -89,18 +90,12 @@ class Nexmo extends Base {
                 return;
             }
 
-        } elseif ( ! empty( $_POST['otp-token'] ) ) {
-
-            $message = __( 'Awaiting verification.', 'elementor-otp' );
-
         // Send verification code
-        } else {
-            $this->send( $component['value'] );
+        } elseif ( empty( $_POST['otp-token'] ) ) {
+            $this->send( $field['value'] );
             if ( $this->hasErrors() ) {
                 $verify = false;
                 $message = $this->getErrorMessage();
-            } else {
-                $message = __( 'Awaiting verification.', 'elementor-otp' );
             }
         }
 

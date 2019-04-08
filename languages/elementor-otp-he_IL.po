@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-03-20 12:53+0200\n"
+"POT-Creation-Date: 2019-04-08 16:26+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,9 +23,9 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/Admin.php:15
-msgid "Twilio Verify"
-msgstr "Twilio Verify"
+#: src/Admin.php:15 src/Components/Sms.php:92
+msgid "Twilio"
+msgstr "Twilio"
 
 #: src/Admin.php:19 src/Admin.php:34
 msgid "API Key"
@@ -40,7 +40,7 @@ msgstr ""
 "כדי לשלב עם הטפסים שלנו, אתה צריך <a href=\"%s\" target=\"_blank\">מפתח API</"
 "a> ."
 
-#: src/Admin.php:30 src/Components/Sms.php:111
+#: src/Admin.php:30 src/Components/Sms.php:93
 msgid "Nexmo"
 msgstr "Nexmo"
 
@@ -48,45 +48,41 @@ msgstr "Nexmo"
 msgid "API Secret"
 msgstr "סוד API"
 
-#: src/Components/Sms.php:28
+#: src/Components/Sms.php:26
 msgid "SMS Verification"
 msgstr "אימות SMS"
 
-#: src/Components/Sms.php:35
+#: src/Components/Sms.php:39 src/Components/Sms.php:65
 msgid "Only numbers and phone characters (#, -, *, etc) are accepted."
-msgstr "רק מספרים ותווי טלפון (#, -, *, וכו ') מתקבלים."
+msgstr "רק מספרים ותווי טלפון (#, -, *, וכו') מתקבלים."
 
-#: src/Components/Sms.php:59
-msgid "Please type the verification code sent to you."
-msgstr "הזן את קוד האימות שנשלח אליך."
-
-#: src/Components/Sms.php:61
+#: src/Components/Sms.php:48
 msgid "Enter code"
 msgstr "הכנס קוד"
 
-#: src/Components/Sms.php:65
-msgid "Verify"
-msgstr "אימות"
-
-#: src/Components/Sms.php:103
+#: src/Components/Sms.php:85
 msgid "Vendor"
 msgstr "ספק"
 
-#: src/Components/Sms.php:110
-msgid "Twilio"
-msgstr "Twilio"
-
-#: src/Components/Sms.php:118
-msgid "Country"
-msgstr "מדינה"
-
-#: src/Components/Sms.php:128
+#: src/Components/Sms.php:101
 msgid "Pattern"
 msgstr "תבנית"
 
-#: src/Vendor/Nexmo.php:94 src/Vendor/Nexmo.php:103 src/Vendor/Twilio.php:118
+#: src/Vendor/Nexmo.php:80 src/Vendor/Twilio.php:85
 msgid "Awaiting verification."
 msgstr "ממתין לאימות."
+
+#~ msgid "Twilio Verify"
+#~ msgstr "Twilio Verify"
+
+#~ msgid "Please type the verification code sent to you."
+#~ msgstr "הזן את קוד האימות שנשלח אליך."
+
+#~ msgid "Verify"
+#~ msgstr "אימות"
+
+#~ msgid "Country"
+#~ msgstr "מדינה"
 
 #~ msgid ""
 #~ "You must create a <a href=\"%s\">new Verify application under your Twilio "

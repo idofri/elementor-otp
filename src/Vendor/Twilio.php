@@ -80,14 +80,14 @@ class Twilio extends Base {
         return false;
     }
 
-    public function submit( $component ) {
+    public function submit( $field ) {
         $verify = true;
         $message = __( 'Awaiting verification.', 'elementor-otp' );
 
         // Check verification code
         if ( ! empty( $_POST['otp-code'] ) ) {
             $code = sanitize_text_field( $_POST['otp-code'] );
-            $this->verify( $component['value'], $code );
+            $this->verify( $field['value'], $code );
             if ( $this->hasErrors() ) {
                 $message = $this->getErrorMessage();
             } else {
@@ -102,7 +102,7 @@ class Twilio extends Base {
                 $message = $this->getErrorMessage();
 
                 // Invalid UUID - resend verification code
-                $this->clearErrors()->send( $component['value'] );
+                $this->clearErrors()->send( $field['value'] );
                 if ( $this->hasErrors() ) {
                     $verify = false;
                     $message = $this->getErrorMessage();
@@ -111,7 +111,7 @@ class Twilio extends Base {
 
         // Send verification code
         } else {
-            $this->send( $component['value'] );
+            $this->send( $field['value'] );
             if ( $this->hasErrors() ) {
                 $verify = false;
                 $message = $this->getErrorMessage();

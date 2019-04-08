@@ -17,8 +17,8 @@ jQuery( function( $ ) {
         }
 
         if ( 'hidden' === $otpCode.attr( 'type' ) ) {
-            $otpCode.attr( 'type', 'text' );
             $otpSms.prop( 'readonly', true );
+            $otpCode.attr( 'type', 'text' ).focus();
             $( '<div class="elementor-field-group"></div>' ).insertAfter( $otpSms );
         }
 
