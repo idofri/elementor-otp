@@ -54,7 +54,7 @@ class Twilio extends Base {
     }
 
     public function verify( $phone_number, $verification_code ) {
-        $res = $this->getClient()->phoneVerificationCheck( $phone_number, '972', $verification_code );
+        $res = $this->getClient()->phoneVerificationCheck( $phone_number, self::COUNTRY_CODE, $verification_code );
 
         if ( $res->ok() ) {
             return true;

@@ -10,9 +10,6 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use ElementorPro\Plugin;
-use ElementorPro\Modules\Forms\Classes\Form_Record;
-
 class ElementorOTP {
 
     public $version = '1.0.0';
@@ -102,7 +99,7 @@ class ElementorOTP {
 
         foreach ( $components as $component ) {
             $this->addComponent( $component );
-            Plugin::instance()->modules_manager->get_modules( 'forms' )->add_component( $component->get_name(), $component );
+            ElementorPro\Plugin::instance()->modules_manager->get_modules( 'forms' )->add_component( $component->get_name(), $component );
         }
     }
 
