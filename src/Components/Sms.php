@@ -126,6 +126,7 @@ class Sms extends Field_Base {
                 'label' => __( 'Pattern', 'elementor-otp' ),
                 'type' => Controls_Manager::TEXT,
                 'default' => '(000) 000-0000',
+                'placeholder' => '(000) 000-0000',
                 'condition' => [
                     'field_type' => $this->get_type(),
                 ],
