@@ -99,7 +99,7 @@ class ComposerStaticInitd66773d61590c19b2dff6272f3c4a378
         ),
         'Elementor\\OTP\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/includes',
         ),
     );
 

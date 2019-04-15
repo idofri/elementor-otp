@@ -1,9 +1,10 @@
 {
     "require": {
         "authy/php": "^3.0",
-        "nexmo/client": "^1.6"
+        "nexmo/client": "^1.6",
+        "guzzlehttp/guzzle": "^6.3"
     },
 	"autoload": {
-        "psr-4": {"Elementor\\OTP\\": "src/"}
+        "psr-4": {"Elementor\\OTP\\": "includes/"}
     }
 }
