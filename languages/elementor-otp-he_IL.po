@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-04-15 10:55+0300\n"
+"POT-Creation-Date: 2019-04-15 16:50+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,21 +23,21 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: elementor-otp.php:19
+#: elementor-otp.php:29
 #, php-format
 msgid ""
 "Elementor OTP requires PHP version %s+, plugin is currently NOT RUNNING."
 msgstr "אלמנטור OTP דורש PHP גרסה %s ומעלה, התוסף אינו פעיל כרגע."
 
-#: src/Admin.php:15 src/Components/Sms.php:118
+#: includes/Admin.php:15 includes/Components/Sms.php:119
 msgid "Twilio"
 msgstr "Twilio"
 
-#: src/Admin.php:19 src/Admin.php:34
+#: includes/Admin.php:19 includes/Admin.php:34
 msgid "API Key"
 msgstr "מפתח API"
 
-#: src/Admin.php:22 src/Admin.php:43
+#: includes/Admin.php:22 includes/Admin.php:43
 #, php-format
 msgid ""
 "To integrate with our forms you need an <a href=\"%s\" target=\"_blank\">API "
@@ -46,41 +46,44 @@ msgstr ""
 "כדי לשלב עם הטפסים שלנו, אתה צריך <a href=\"%s\" target=\"_blank\">מפתח API</"
 "a> ."
 
-#: src/Admin.php:30 src/Components/Sms.php:119
+#: includes/Admin.php:30 includes/Components/Sms.php:120
 msgid "Nexmo"
 msgstr "Nexmo"
 
-#: src/Admin.php:40
+#: includes/Admin.php:40
 msgid "API Secret"
 msgstr "סוד API"
 
-#: src/Components/Sms.php:26
+#: includes/Components/Sms.php:26
 msgid "SMS Verification"
 msgstr "אימות SMS"
 
-#: src/Components/Sms.php:39 src/Components/Sms.php:65
+#: includes/Components/Sms.php:39 includes/Components/Sms.php:66
 msgid "Only numbers and phone characters (#, -, *, etc) are accepted."
 msgstr "רק מספרים ותווי טלפון (#, -, *, וכו') מתקבלים."
 
-#: src/Components/Sms.php:48
+#: includes/Components/Sms.php:48
 msgid "Enter code"
 msgstr "הכנס קוד"
 
-#: src/Components/Sms.php:111
-msgid "Vendor"
-msgstr "ספק"
+#: includes/Components/Sms.php:112
+msgid "Provider"
+msgstr "ספק שירות"
 
-#: src/Components/Sms.php:127
+#: includes/Components/Sms.php:128
 msgid "Pattern"
 msgstr "תבנית"
 
-#: src/Components/Sms.php:140
+#: includes/Components/Sms.php:141
 msgid "Country"
 msgstr "מדינה"
 
-#: src/Vendor/Nexmo.php:80 src/Vendor/Twilio.php:85
+#: includes/Provider/Nexmo.php:75 includes/Provider/Twilio.php:79
 msgid "Awaiting verification."
 msgstr "ממתין לאימות."
+
+#~ msgid "Vendor"
+#~ msgstr "ספק"
 
 #~ msgid "Twilio Verify"
 #~ msgstr "Twilio Verify"

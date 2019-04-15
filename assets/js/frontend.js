@@ -37,6 +37,7 @@ jQuery( function( $ ) {
         var $otpSms = $( event.target ).find( '[data-sms]' );
         if ( $otpSms ) {
             $otpSms.prop( 'readonly', false );
+            $otpSms.siblings( '.elementor-field-group' ).remove();
         }
 
         var $otpCode = $( event.target ).find( '[name="otp-code"]' );

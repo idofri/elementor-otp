@@ -1,5 +1,5 @@
 <?php
-namespace Elementor\OTP\Vendor;
+namespace Elementor\OTP\Provider;
 
 use Exception;
 use Nexmo\Client;
