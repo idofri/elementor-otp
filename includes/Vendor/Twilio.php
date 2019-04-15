@@ -1,27 +1,38 @@
 <?php
 namespace Elementor\OTP\Vendor;
 
+use Authy\AuthyApi;
+
 class Twilio extends Base {
 
-    const COUNTRY_CODE = 972;
-
     const OPTION_NAME_API_KEY = 'elementor_otp_twilio_api_key';
-
-    protected static $via = 'sms';
 
     protected static $uuid;
 
     protected static $client;
 
+    protected static $via = 'sms';
+
+    protected static $country_code = 0;
+
     public function getClient() {
         if ( is_null( self::$client ) ) {
-            self::$client = new Authy( $this->getApiKey() );
+            self::$client = new AuthyApi( $this->getApiKey() );
         }
         return self::$client;
     }
 
     public static function getApiKey() {
         return get_option( self::OPTION_NAME_API_KEY );
+    }
+
+    public function setCountryCode( $country_code) {
+        self::$country_code = $country_code;
+        return $this;
+    }
+
+    public function getCountryCode() {
+        return self::$country_code;
     }
 
     public function setViaMethod( $via) {
@@ -43,7 +54,7 @@ class Twilio extends Base {
     }
 
     public function send( $phone_number ) {
-        $res = $this->getClient()->phoneVerificationStart( $phone_number, self::COUNTRY_CODE, $this->getViaMethod() );
+        $res = $this->getClient()->phoneVerificationStart( $phone_number, $this->getCountryCode(), $this->getViaMethod() );
 
         if ( $res->ok() ) {
             $this->setUuid( $res->bodyvar( 'uuid' ) );
@@ -54,7 +65,7 @@ class Twilio extends Base {
     }
 
     public function verify( $phone_number, $verification_code ) {
-        $res = $this->getClient()->phoneVerificationCheck( $phone_number, self::COUNTRY_CODE, $verification_code );
+        $res = $this->getClient()->phoneVerificationCheck( $phone_number, $this->getCountryCode(), $verification_code );
 
         if ( $res->ok() ) {
             return true;

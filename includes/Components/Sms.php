@@ -61,6 +61,7 @@ class Sms extends Field_Base {
         if ( empty( $field['value'] ) ) {
             return;
         }
+        
         if ( preg_match( '/^[0-9()#&+*-=.\s]+$/', $field['value'] ) !== 1 ) {
             $ajax_handler->add_error( $field['id'], __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-otp' ) );
             return;
@@ -71,7 +72,7 @@ class Sms extends Field_Base {
             return;
         }
 
-        return $vendor->submit( $field, $record );
+        $vendor->submit( $field, $record );
     }
 
     public function getVendor( $field, Form_Record $record ) {
