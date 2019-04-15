@@ -630,17 +630,17 @@
     },
     {
         "name": "nexmo/client",
-        "version": "1.6.2",
-        "version_normalized": "1.6.2.0",
+        "version": "1.7.0",
+        "version_normalized": "1.7.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Nexmo/nexmo-php.git",
-            "reference": "2f79f67f24225ea627ee14578e98c96276cdd4c5"
+            "reference": "f8582d2361382e2b02352b1cb96c69ce2a2c7360"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Nexmo/nexmo-php/zipball/2f79f67f24225ea627ee14578e98c96276cdd4c5",
-            "reference": "2f79f67f24225ea627ee14578e98c96276cdd4c5",
+            "url": "https://api.github.com/repos/Nexmo/nexmo-php/zipball/f8582d2361382e2b02352b1cb96c69ce2a2c7360",
+            "reference": "f8582d2361382e2b02352b1cb96c69ce2a2c7360",
             "shasum": ""
         },
         "require": {
@@ -656,7 +656,7 @@
             "phpunit/phpunit": "^5.7",
             "squizlabs/php_codesniffer": "^3.1"
         },
-        "time": "2019-02-07T11:14:34+00:00",
+        "time": "2019-04-13T10:18:16+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
