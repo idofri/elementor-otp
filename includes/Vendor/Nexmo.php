@@ -55,7 +55,7 @@ class Nexmo extends Base {
             $verification = new Verification( $phone_number, get_bloginfo( 'name' ) );
             $this->getClient()->verify()->start( $verification );
         } catch ( Exception $e ) {
-            return $this->error( $e->getMessage() );
+            return $this->setErrorMessage( $e->getMessage() );
         }
 
         $this->setRequestId( $verification->getRequestId() );
@@ -66,16 +66,11 @@ class Nexmo extends Base {
             $verification = new Verification( $request_id );
             return $this->getClient()->verify()->check( $verification, $code );
         } catch ( Exception $e ) {
-            return $this->error( $e->getMessage() );
+            return $this->setErrorMessage( $e->getMessage() );
         }
     }
 
-    public function error( $message ) {
-        self::$errors->add( 'nexmo', __( $message, 'elementor-otp' ) );
-        return false;
-    }
-
-    public function submit( $field ) {
+    public function submit( $field, $record ) {
         $verify = true;
         $message = __( 'Awaiting verification.', 'elementor-otp' );
 

@@ -2,14 +2,16 @@
 namespace Elementor\OTP\Vendor;
 
 use WP_Error;
+use ReflectionClass;
+use ElementorPro\Modules\Forms\Classes\Form_Record;
 
 abstract class Base {
 
     protected static $errors;
 
-    abstract public function submit( $component );
-
     abstract public function send( $recipient );
+
+    abstract public function submit( $field, Form_Record $record );
 
     abstract public function verify( $recipient, $verification_code );
 
@@ -20,6 +22,14 @@ abstract class Base {
     public function clearErrors() {
         self::$errors = new WP_Error;
         return $this;
+    }
+
+    public function getErrorCode() {
+        return strtolower( ( new ReflectionClass( $this ) )->getShortName() );
+    }
+
+    public function setErrorMessage( $message ) {
+        self::$errors->add( $this->getErrorCode(), __( $message, 'elementor-otp' ) );
     }
 
     public function getErrorMessage() {
@@ -33,7 +43,7 @@ abstract class Base {
             'errors'  => [],
             'data'    => [],
             'token'   => $token,
-            'verify'  => $verify,
+            'verify'  => $verify
         ] );
     }
 

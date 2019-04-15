@@ -50,7 +50,7 @@ class Twilio extends Base {
             return;
         }
 
-        return $this->error( $res );
+        return $this->setErrorMessage( $res->bodyvar( 'message' ) );
     }
 
     public function verify( $phone_number, $verification_code ) {
@@ -60,27 +60,10 @@ class Twilio extends Base {
             return true;
         }
 
-        return $this->error( $res );
+        return $this->setErrorMessage( $res->bodyvar( 'message' ) );
     }
 
-    public function status( $uuid ) {
-        $res = $this->getClient()->phoneVerificationStatus( $uuid );
-
-        if ( $res->ok() ) {
-            return $res;
-        }
-
-        return $this->error( $res );
-    }
-
-    public function error( $res ) {
-        $errorCode = $res->bodyvar( 'error_code' );
-        $errorMessage = $res->bodyvar( 'message' );
-        self::$errors->add( $errorCode, __( $errorMessage, 'elementor-otp' ) );
-        return false;
-    }
-
-    public function submit( $field ) {
+    public function submit( $field, $record ) {
         $verify = true;
         $message = __( 'Awaiting verification.', 'elementor-otp' );
 
@@ -92,21 +75,6 @@ class Twilio extends Base {
                 $message = $this->getErrorMessage();
             } else {
                 return;
-            }
-
-        // Start verification using UUID
-        } elseif ( ! empty( $_POST['otp-token'] ) ) {
-            $uuid = sanitize_text_field( $_POST['otp-token'] );
-            $this->status( $uuid );
-            if ( $this->hasErrors() ) {
-                $message = $this->getErrorMessage();
-
-                // Invalid UUID - resend verification code
-                $this->clearErrors()->send( $field['value'] );
-                if ( $this->hasErrors() ) {
-                    $verify = false;
-                    $message = $this->getErrorMessage();
-                }
             }
 
         // Send verification code
