@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-04-08 16:26+0300\n"
+"POT-Creation-Date: 2019-04-15 10:55+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,13 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/Admin.php:15 src/Components/Sms.php:92
+#: elementor-otp.php:19
+#, php-format
+msgid ""
+"Elementor OTP requires PHP version %s+, plugin is currently NOT RUNNING."
+msgstr "אלמנטור OTP דורש PHP גרסה %s ומעלה, התוסף אינו פעיל כרגע."
+
+#: src/Admin.php:15 src/Components/Sms.php:118
 msgid "Twilio"
 msgstr "Twilio"
 
@@ -40,7 +46,7 @@ msgstr ""
 "כדי לשלב עם הטפסים שלנו, אתה צריך <a href=\"%s\" target=\"_blank\">מפתח API</"
 "a> ."
 
-#: src/Admin.php:30 src/Components/Sms.php:93
+#: src/Admin.php:30 src/Components/Sms.php:119
 msgid "Nexmo"
 msgstr "Nexmo"
 
@@ -60,13 +66,17 @@ msgstr "רק מספרים ותווי טלפון (#, -, *, וכו') מתקבלי�
 msgid "Enter code"
 msgstr "הכנס קוד"
 
-#: src/Components/Sms.php:85
+#: src/Components/Sms.php:111
 msgid "Vendor"
 msgstr "ספק"
 
-#: src/Components/Sms.php:101
+#: src/Components/Sms.php:127
 msgid "Pattern"
 msgstr "תבנית"
+
+#: src/Components/Sms.php:140
+msgid "Country"
+msgstr "מדינה"
 
 #: src/Vendor/Nexmo.php:80 src/Vendor/Twilio.php:85
 msgid "Awaiting verification."
@@ -80,9 +90,6 @@ msgstr "ממתין לאימות."
 
 #~ msgid "Verify"
 #~ msgstr "אימות"
-
-#~ msgid "Country"
-#~ msgstr "מדינה"
 
 #~ msgid ""
 #~ "You must create a <a href=\"%s\">new Verify application under your Twilio "
