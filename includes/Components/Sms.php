@@ -40,7 +40,7 @@ class Sms extends Field_Base {
         if ( ! empty( $item['mask'] ) ) {
             $form->set_render_attribute( $elementSms, 'data-mask', $item['mask'] );
         }
-        echo '<input size="1" ' . $form->get_render_attribute_string( $elementSms ) . '>';
+        echo '<input ' . $form->get_render_attribute_string( $elementSms ) . '>';
 
         // Code
         $form->add_render_attribute( $elementCode, 'type', 'hidden' );
@@ -61,7 +61,7 @@ class Sms extends Field_Base {
         if ( empty( $field['value'] ) ) {
             return;
         }
-        
+
         if ( preg_match( '/^[0-9()#&+*-=.\s]+$/', $field['value'] ) !== 1 ) {
             $ajax_handler->add_error( $field['id'], __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-otp' ) );
             return;
