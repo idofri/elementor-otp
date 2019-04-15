@@ -45,8 +45,6 @@ class Admin {
                 ]
             ]
         ] );
-
-        do_action( 'elementor_otp/admin/settings', $settings, $this );
     }
 
 }

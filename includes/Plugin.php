@@ -1,8 +1,6 @@
 <?php
 namespace Elementor\OTP;
 
-require __DIR__ . '/vendor/autoload.php';
-
 class Plugin {
 
     public $version = '1.0.0';
@@ -25,11 +23,10 @@ class Plugin {
     }
 
     public function __construct() {
-        add_action( 'init',               [ $this, 'loadTextDomain' ] );
-        add_action( 'elementor_pro/init', [ $this, 'setupHooks' ] );
+        add_action( 'elementor_pro/init', [ $this, 'init' ] );
     }
 
-    public function setupHooks() {
+    public function init() {
         add_action( 'elementor_otp/init',                        [ $this, 'addComponents' ] );
         add_action( 'elementor/editor/after_enqueue_scripts',    [ $this, 'editorEnqueueScripts' ] );
         add_action( 'elementor/frontend/after_register_styles',  [ $this, 'frontRegisterStyles' ] );
@@ -45,7 +42,7 @@ class Plugin {
     public function frontRegisterStyles() {
         wp_register_style(
             'elementor-otp-frontend',
-            plugins_url( '/assets/css/frontend.css', __FILE__ ),
+            plugins_url( '/assets/css/frontend.css', ELEMENTOR_OTP_FILE ),
             [],
             $this->version
         );
@@ -56,7 +53,7 @@ class Plugin {
 
         wp_register_script(
             'jquery-mask',
-            plugins_url( '/assets/js/jquery.mask.min.js', __FILE__ ),
+            plugins_url( '/assets/js/jquery.mask.min.js', ELEMENTOR_OTP_FILE ),
             [ 'jquery' ],
             '1.14.15',
             true
@@ -64,7 +61,7 @@ class Plugin {
 
         wp_register_script(
             'elementor-otp-frontend',
-            plugins_url( '/assets/js/frontend' . $suffix . '.js', __FILE__ ),
+            plugins_url( '/assets/js/frontend' . $suffix . '.js', ELEMENTOR_OTP_FILE ),
             [ 'jquery', 'jquery-mask' ],
             $this->version,
             true
@@ -76,7 +73,7 @@ class Plugin {
 
         wp_enqueue_script(
             'jquery-mask',
-            plugins_url( '/assets/js/jquery.mask.min.js', __FILE__ ),
+            plugins_url( '/assets/js/jquery.mask.min.js', ELEMENTOR_OTP_FILE ),
             [ 'jquery' ],
             '1.14.15',
             true
@@ -84,15 +81,11 @@ class Plugin {
 
         wp_enqueue_script(
             'elementor-otp-editor',
-            plugins_url( '/assets/js/editor' . $suffix . '.js', __FILE__ ),
+            plugins_url( '/assets/js/editor' . $suffix . '.js', ELEMENTOR_OTP_FILE ),
             [ 'elementor-pro' ],
             $this->version,
             true
         );
-    }
-
-    public function loadTextDomain() {
-        load_plugin_textdomain( 'elementor-otp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     }
 
     public function addComponents() {
@@ -107,5 +100,3 @@ class Plugin {
     }
 
 }
-
-Plugin::instance();
