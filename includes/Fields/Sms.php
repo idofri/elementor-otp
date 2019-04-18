@@ -82,11 +82,10 @@ class Sms extends Field_Base {
             }
 
             $provider = ucfirst( $form_field['provider'] );
-            $provider = "Elementor\\OTP\\Providers\\{$provider}";
-            $provider = apply_filters( "elementor_otp/providers/{$provider}", $field, $form_field, $record );
+            $className = "Elementor\\OTP\\Providers\\{$provider}";
 
-            if ( class_exists( $provider ) ) {
-                return new $provider( $form_field );
+            if ( class_exists( $className ) ) {
+                return new $className( $form_field );
             }
         }
 
