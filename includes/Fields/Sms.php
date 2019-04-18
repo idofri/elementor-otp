@@ -1,5 +1,5 @@
 <?php
-namespace Elementor\OTP\Components;
+namespace Elementor\OTP\Fields;
 
 use ElementorPro\Plugin;
 use Elementor\Controls_Manager;
@@ -54,7 +54,7 @@ class Sms extends Field_Base {
         $form->add_render_attribute( $elementToken, 'name', 'otp-token' );
         echo '<input ' . $form->get_render_attribute_string( $elementToken ) . '>';
 
-        do_action( 'elementor_otp/components/sms/render', $item, $item_index, $form, $this );
+        do_action( 'elementor_otp/fields/sms/render', $item, $item_index, $form, $this );
     }
 
     public function validation( $field, Form_Record $record, Ajax_Handler $ajax_handler ) {
@@ -72,7 +72,7 @@ class Sms extends Field_Base {
             return;
         }
 
-        $provider->submit( $field, $record );
+        $provider->submit( $field );
     }
 
     public function getProvider( $field, Form_Record $record ) {
@@ -82,11 +82,11 @@ class Sms extends Field_Base {
             }
 
             $className = ucfirst( $form_field['provider'] );
-            $className = "Elementor\\OTP\\Provider\\{$className}";
+            $className = "Elementor\\OTP\\Providers\\{$className}";
             $className = apply_filters( 'elementor_otp/submit/provider', $className, $field, $form_field, $record );
 
             if ( class_exists( $className ) ) {
-                return new $className;
+                return new $className( $form_field );
             }
         }
 

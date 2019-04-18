@@ -7,8 +7,6 @@ class Plugin {
 
     public static $instance = null;
 
-    protected static $components = [];
-
     public static function instance() {
         if ( is_null( self::$instance ) ) {
             self::$instance = new self();
@@ -17,17 +15,12 @@ class Plugin {
         return self::$instance;
     }
 
-    public function addComponent( $component ) {
-        self::$components[ $component->get_type() ] = $component;
-        return $this;
-    }
-
     public function __construct() {
         add_action( 'elementor_pro/init', [ $this, 'init' ] );
     }
 
     public function init() {
-        add_action( 'elementor_otp/init',                        [ $this, 'addComponents' ] );
+        add_action( 'elementor_otp/init',                        [ $this, 'addfieldTypeSms' ] );
         add_action( 'elementor/editor/after_enqueue_scripts',    [ $this, 'editorEnqueueScripts' ] );
         add_action( 'elementor/frontend/after_register_styles',  [ $this, 'frontRegisterStyles' ] );
         add_action( 'elementor/frontend/after_register_scripts', [ $this, 'frontRegisterScripts' ] );
@@ -88,15 +81,9 @@ class Plugin {
         );
     }
 
-    public function addComponents() {
-        $components = apply_filters( 'elementor_otp/components', [
-            new Components\Sms()
-        ] );
-
-        foreach ( $components as $component ) {
-            $this->addComponent( $component );
-            \ElementorPro\Plugin::instance()->modules_manager->get_modules( 'forms' )->add_component( $component->get_name(), $component );
-        }
+    public function addfieldTypeSms() {
+        $fieldTypeSms = new Fields\Sms();
+        \ElementorPro\Plugin::instance()->modules_manager->get_modules( 'forms' )->add_form_field_type( $fieldTypeSms->get_name(), $fieldTypeSms );
     }
 
 }

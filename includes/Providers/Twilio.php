@@ -1,5 +1,5 @@
 <?php
-namespace Elementor\OTP\Provider;
+namespace Elementor\OTP\Providers;
 
 use Authy\AuthyApi;
 
@@ -74,9 +74,14 @@ class Twilio extends Base {
         return $this->setErrorMessage( $res->bodyvar( 'message' ) );
     }
 
-    public function submit( $field, $record ) {
+    public function submit( $field ) {
         $verify = true;
         $message = __( 'Awaiting verification.', 'elementor-otp' );
+
+        $settings = $this->getSettings();
+        if ( ! empty( $settings['country'] ) ) {
+            $this->setCountryCode( $settings['country'] );
+        }
 
         // Check verification code
         if ( ! empty( $_POST['otp-code'] ) ) {

@@ -1,5 +1,5 @@
 <?php
-namespace Elementor\OTP\Provider;
+namespace Elementor\OTP\Providers;
 
 use Exception;
 use Nexmo\Client;
@@ -70,7 +70,7 @@ class Nexmo extends Base {
         }
     }
 
-    public function submit( $field, $record ) {
+    public function submit( $field ) {
         $verify = true;
         $message = __( 'Awaiting verification.', 'elementor-otp' );
 

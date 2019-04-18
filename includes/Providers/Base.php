@@ -1,27 +1,23 @@
 <?php
-namespace Elementor\OTP\Provider;
+namespace Elementor\OTP\Providers;
 
 use WP_Error;
 use ReflectionClass;
-use ElementorPro\Modules\Forms\Classes\Form_Record;
 
 abstract class Base {
 
-    protected static $errors;
+    private static $errors;
+
+    private static $settings = [];
+
+    abstract public function submit( $field );
 
     abstract public function send( $recipient );
-
-    abstract public function submit( $field, Form_Record $record );
 
     abstract public function verify( $recipient, $verification_code );
 
     public function hasErrors() {
         return self::$errors->has_errors();
-    }
-
-    public function clearErrors() {
-        self::$errors = new WP_Error;
-        return $this;
     }
 
     public function getErrorCode() {
@@ -47,8 +43,13 @@ abstract class Base {
         ] );
     }
 
-    public function __construct() {
-        $this->clearErrors();
+    public function getSettings() {
+        return self::$settings;
+    }
+
+    public function __construct( Array $settings ) {
+        self::$settings = $settings;
+        self::$errors = new WP_Error;
     }
 
 }
