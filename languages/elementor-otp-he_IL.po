@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-04-15 16:50+0300\n"
+"POT-Creation-Date: 2019-04-21 15:07+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -29,7 +29,7 @@ msgid ""
 "Elementor OTP requires PHP version %s+, plugin is currently NOT RUNNING."
 msgstr "אלמנטור OTP דורש PHP גרסה %s ומעלה, התוסף אינו פעיל כרגע."
 
-#: includes/Admin.php:15 includes/Components/Sms.php:119
+#: includes/Admin.php:15 includes/Fields/Sms.php:129
 msgid "Twilio"
 msgstr "Twilio"
 
@@ -46,7 +46,7 @@ msgstr ""
 "כדי לשלב עם הטפסים שלנו, אתה צריך <a href=\"%s\" target=\"_blank\">מפתח API</"
 "a> ."
 
-#: includes/Admin.php:30 includes/Components/Sms.php:120
+#: includes/Admin.php:30 includes/Fields/Sms.php:130
 msgid "Nexmo"
 msgstr "Nexmo"
 
@@ -54,31 +54,39 @@ msgstr "Nexmo"
 msgid "API Secret"
 msgstr "סוד API"
 
-#: includes/Components/Sms.php:26
+#: includes/Fields/Sms.php:28
 msgid "SMS Verification"
 msgstr "אימות SMS"
 
-#: includes/Components/Sms.php:39 includes/Components/Sms.php:66
+#: includes/Fields/Sms.php:41 includes/Fields/Sms.php:77
 msgid "Only numbers and phone characters (#, -, *, etc) are accepted."
 msgstr "רק מספרים ותווי טלפון (#, -, *, וכו') מתקבלים."
 
-#: includes/Components/Sms.php:48
+#: includes/Fields/Sms.php:49
 msgid "Enter code"
 msgstr "הכנס קוד"
 
-#: includes/Components/Sms.php:112
+#: includes/Fields/Sms.php:54
+msgid "Please type the verification code sent to you."
+msgstr "הזן את קוד האימות שנשלח אליך."
+
+#: includes/Fields/Sms.php:59
+msgid "Verify"
+msgstr "אימות"
+
+#: includes/Fields/Sms.php:122
 msgid "Provider"
 msgstr "ספק שירות"
 
-#: includes/Components/Sms.php:128
+#: includes/Fields/Sms.php:138
 msgid "Pattern"
 msgstr "תבנית"
 
-#: includes/Components/Sms.php:141
+#: includes/Fields/Sms.php:151
 msgid "Country"
 msgstr "מדינה"
 
-#: includes/Provider/Nexmo.php:75 includes/Provider/Twilio.php:79
+#: includes/Providers/Nexmo.php:75 includes/Providers/Twilio.php:79
 msgid "Awaiting verification."
 msgstr "ממתין לאימות."
 
@@ -87,12 +95,6 @@ msgstr "ממתין לאימות."
 
 #~ msgid "Twilio Verify"
 #~ msgstr "Twilio Verify"
-
-#~ msgid "Please type the verification code sent to you."
-#~ msgstr "הזן את קוד האימות שנשלח אליך."
-
-#~ msgid "Verify"
-#~ msgstr "אימות"
 
 #~ msgid ""
 #~ "You must create a <a href=\"%s\">new Verify application under your Twilio "

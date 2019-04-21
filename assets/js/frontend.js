@@ -1,53 +1,47 @@
 jQuery( function( $ ) {
 
     function formSubmit( event, xhr ) {
-
         if ( xhr.responseJSON.data && ! xhr.responseJSON.data.verify ) {
             return;
         }
 
         var $form = $( event.target );
-        var $otpSms = $form.find( '[data-sms]' );
-        var $otpCode = $form.find( '[name="otp-code"]' );
-        var $otpToken = $form.find( '[name="otp-token"]' );
-
+        var $sms = $form.find( '[data-sms]' );
+        var $code = $form.find( '[name="otp-code"]' );
+        var $token = $form.find( '[name="otp-token"]' );
+        
         // Token
         if ( xhr.responseJSON.data.token ) {
-            $otpToken.val( xhr.responseJSON.data.token );
+            $token.val( xhr.responseJSON.data.token );
         }
 
-        if ( 'hidden' === $otpCode.attr( 'type' ) ) {
-            $otpSms.prop( 'readonly', true );
-            $otpCode.attr( 'type', 'text' ).focus();
-            $( '<div class="elementor-field-group"></div>' ).insertAfter( $otpSms );
-        }
+        $.featherlight( $code.parent(), {
+            closeIcon: '',
+            otherClose: '.elementor-button',
+            beforeClose: function( event ) {
+                if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {
+                    return;
+                }
 
+                $code.val( $( event.currentTarget ).find( '[name="otp-code"]' ).val() );
+                $form.trigger( 'submit' );
+            }
+        } );
     }
 
     $( 'form.elementor-form' ).ajaxSuccess( formSubmit );
 
     $( 'form.elementor-form' ).on( 'error submit_success', function( event ) {
-        var $otpCode = $( event.target ).find( '[name="otp-code"]' );
-        if ( $otpCode ) {
-            $otpCode.val('');
+        var $code = $( event.target ).find( '[name="otp-code"]' );
+        if ( $code ) {
+            $code.val('');
         }
     } );
 
     $( 'form.elementor-form' ).on( 'submit_success', function( event ) {
-        var $otpSms = $( event.target ).find( '[data-sms]' );
-        if ( $otpSms ) {
-            $otpSms.prop( 'readonly', false );
-            $otpSms.siblings( '.elementor-field-group' ).remove();
-        }
-
-        var $otpCode = $( event.target ).find( '[name="otp-code"]' );
-        if ( $otpCode ) {
-            $otpCode.attr( 'type', 'hidden' );
-        }
-
-        var $otpToken = $( event.target ).find( '[name="otp-token"]' );
-        if ( $otpToken ) {
-            $otpToken.val('');
+        var $token = $( event.target ).find( '[name="otp-token"]' );
+        if ( $token ) {
+            $token.val('');
         }
     } );
 

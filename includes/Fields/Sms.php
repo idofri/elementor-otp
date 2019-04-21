@@ -11,10 +11,12 @@ class Sms extends Field_Base {
 
     public $depended_scripts = [
         'jquery-mask',
+        'featherlight',
         'elementor-otp-frontend'
     ];
 
     public $depended_styles = [
+        'featherlight',
         'elementor-otp-frontend'
     ];
 
@@ -27,34 +29,35 @@ class Sms extends Field_Base {
     }
 
     public function render( $item, $item_index, $form ) {
-        $elementSms = 'input' . $item_index;
-        $elementCode = 'code' . $item_index;
-        $elementToken = 'token' . $item_index;
+        $input = 'input' . $item_index;
+        $token = 'token' . $item_index;
+        $code = 'code' . $item_index;
 
         // SMS
-        $form->set_render_attribute( $elementSms, 'type', 'tel' );
-        $form->add_render_attribute( $elementSms, 'data-sms', true );
-        $form->add_render_attribute( $elementSms, 'class', 'elementor-field-textual' );
-        $form->add_render_attribute( $elementSms, 'pattern', '[0-9()#&+*-=.\s]+' );
-        $form->add_render_attribute( $elementSms, 'title', __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
+        $form->set_render_attribute( $input, 'type', 'tel' );
+        $form->add_render_attribute( $input, 'data-sms', true );
+        $form->add_render_attribute( $input, 'class', 'elementor-field-textual' );
+        $form->add_render_attribute( $input, 'pattern', '[0-9()#&+*-=.\s]+' );
+        $form->add_render_attribute( $input, 'title', __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-pro' ) );
         if ( ! empty( $item['mask'] ) ) {
-            $form->set_render_attribute( $elementSms, 'data-mask', $item['mask'] );
+            $form->set_render_attribute( $input, 'data-mask', $item['mask'] );
         }
-        echo '<input ' . $form->get_render_attribute_string( $elementSms ) . '>';
+        echo '<input ' . $form->get_render_attribute_string( $input ) . '>';
 
         // Code
-        $form->add_render_attribute( $elementCode, 'type', 'hidden' );
-        $form->add_render_attribute( $elementCode, 'class', $form->get_render_attributes( $elementSms, 'class' ) );
-        $form->add_render_attribute( $elementCode, 'placeholder', __( 'Enter code', 'elementor-otp' ) );
-        $form->add_render_attribute( $elementCode, 'name', 'otp-code' );
-        echo '<input ' . $form->get_render_attribute_string( $elementCode ) . '>';
+        $form->add_render_attribute( $code, 'type', 'text' );
+        $form->add_render_attribute( $code, 'class', $form->get_render_attributes( $input, 'class' ) );
+        $form->add_render_attribute( $code, 'placeholder', __( 'Enter code', 'elementor-otp' ) );
+        $form->add_render_attribute( $code, 'name', 'otp-code' );
+        echo '<div class="elementor-hidden">';
+            echo '<input ' . $form->get_render_attribute_string( $code ) . '>';
+            echo '<button type="submit" ' . $form->get_render_attribute_string( 'button' ) . '>' . __( 'Verify', 'elementor-otp' ) . '</button>';
+        echo '</div>';
 
         // Token
-        $form->add_render_attribute( $elementToken, 'type', 'hidden' );
-        $form->add_render_attribute( $elementToken, 'name', 'otp-token' );
-        echo '<input ' . $form->get_render_attribute_string( $elementToken ) . '>';
-
-        do_action( 'elementor_otp/fields/sms/render', $item, $item_index, $form, $this );
+        $form->add_render_attribute( $token, 'type', 'hidden' );
+        $form->add_render_attribute( $token, 'name', 'otp-token' );
+        echo '<input ' . $form->get_render_attribute_string( $token ) . '>';
     }
 
     public function validation( $field, Form_Record $record, Ajax_Handler $ajax_handler ) {

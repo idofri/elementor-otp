@@ -94,7 +94,7 @@ class Twilio extends Base {
             }
 
         // Send verification code
-        } else {
+        } elseif ( empty( $_POST['otp-token'] ) ) {
             $this->send( $field['value'] );
             if ( $this->hasErrors() ) {
                 $verify = false;

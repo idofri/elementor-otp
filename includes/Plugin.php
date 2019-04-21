@@ -34,6 +34,13 @@ class Plugin {
 
     public function frontRegisterStyles() {
         wp_register_style(
+            'featherlight',
+            plugins_url( '/assets/lib/featherlight/featherlight.min.css', ELEMENTOR_OTP_FILE ),
+            [],
+            '1.7.6'
+        );
+
+        wp_register_style(
             'elementor-otp-frontend',
             plugins_url( '/assets/css/frontend.css', ELEMENTOR_OTP_FILE ),
             [],
@@ -46,9 +53,17 @@ class Plugin {
 
         wp_register_script(
             'jquery-mask',
-            plugins_url( '/assets/js/jquery.mask.min.js', ELEMENTOR_OTP_FILE ),
+            plugins_url( '/assets/lib/jquery-mask/jquery.mask.min.js', ELEMENTOR_OTP_FILE ),
             [ 'jquery' ],
             '1.14.15',
+            true
+        );
+
+        wp_register_script(
+            'featherlight',
+            plugins_url( '/assets/lib/featherlight/featherlight.min.js', ELEMENTOR_OTP_FILE ),
+            [ 'jquery' ],
+            '1.7.6',
             true
         );
 
@@ -66,9 +81,17 @@ class Plugin {
 
         wp_enqueue_script(
             'jquery-mask',
-            plugins_url( '/assets/js/jquery.mask.min.js', ELEMENTOR_OTP_FILE ),
+            plugins_url( '/assets/lib/jquery-mask/jquery.mask.min.js', ELEMENTOR_OTP_FILE ),
             [ 'jquery' ],
             '1.14.15',
+            true
+        );
+
+        wp_register_script(
+            'featherlight',
+            plugins_url( '/assets/lib/featherlight/featherlight.min.js', ELEMENTOR_OTP_FILE ),
+            [ 'jquery' ],
+            '1.7.6',
             true
         );
 
