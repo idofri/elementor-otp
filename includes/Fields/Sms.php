@@ -50,8 +50,17 @@ class Sms extends Field_Base {
         $form->add_render_attribute( $code, 'placeholder', __( 'Enter code', 'elementor-otp' ) );
         $form->add_render_attribute( $code, 'name', 'otp-code' );
         echo '<div class="elementor-hidden">';
-            echo '<input ' . $form->get_render_attribute_string( $code ) . '>';
-            echo '<button type="submit" ' . $form->get_render_attribute_string( 'button' ) . '>' . __( 'Verify', 'elementor-otp' ) . '</button>';
+            echo '<div class="elementor-2 elementor-widget-form">';
+                echo '<div class="elementor-element elementor-button-align-stretch elementor-element-' . $form->get_id() . '">';
+                    echo '<div class="elementor-field-group">';
+                        echo '<label class="elementor-field-label">נא להכניס קוד אימות שנשלח אליך</label>';
+                        echo '<input ' . $form->get_render_attribute_string( $code ) . '>';
+                    echo '</div>';
+                    echo '<div ' . $form->get_render_attribute_string( 'submit-group' ) . '>';
+                        echo '<button type="submit" ' . $form->get_render_attribute_string( 'button' ) . '>' . __( 'Verify', 'elementor-otp' ) . '</button>';
+                    echo '</div>';
+                echo '</div>';
+            echo '</div>';
         echo '</div>';
 
         // Token
@@ -69,7 +78,7 @@ class Sms extends Field_Base {
             $ajax_handler->add_error( $field['id'], __( 'Only numbers and phone characters (#, -, *, etc) are accepted.', 'elementor-otp' ) );
             return;
         }
-        
+
         $provider = $this->getProvider( $field, $record );
         if ( ! $provider ) {
             return;

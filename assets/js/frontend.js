@@ -6,18 +6,20 @@ jQuery( function( $ ) {
         }
 
         var $form = $( event.target );
-        var $sms = $form.find( '[data-sms]' );
         var $code = $form.find( '[name="otp-code"]' );
         var $token = $form.find( '[name="otp-token"]' );
-        
+
         // Token
         if ( xhr.responseJSON.data.token ) {
             $token.val( xhr.responseJSON.data.token );
         }
 
-        $.featherlight( $code.parent(), {
+        $.featherlight( $code.closest( '.elementor-widget-form' ), {
             closeIcon: '',
             otherClose: '.elementor-button',
+            beforeContent: function( event ) {
+                console.log(event);
+            },
             beforeClose: function( event ) {
                 if ( ! $( event.target ).hasClass( 'elementor-button' ) ) {
                     return;
