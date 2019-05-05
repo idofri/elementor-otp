@@ -59,6 +59,10 @@ class Plugin {
             $this->version,
             true
         );
+
+        wp_localize_script( 'elementor-otp-frontend', 'elementorOtpFrontendConfig', [
+            'placeholder' => __( 'Please type the verification code sent to you', 'elementor-otp' )
+        ] );
     }
 
     public function editorEnqueueScripts() {

@@ -8,18 +8,17 @@ jQuery( function( $ ) {
 
         var $form = $( event.target );
         var $otpSms = $form.find( '[data-sms]' );
-        var $otpCode = $form.find( '[name="otp-code"]' );
         var $otpToken = $form.find( '[name="otp-token"]' );
 
         // Token
-        if ( xhr.responseJSON.data.token ) {
+        if ( xhr.responseJSON.data && xhr.responseJSON.data.token ) {
             $otpToken.val( xhr.responseJSON.data.token );
-        }
-
-        if ( 'hidden' === $otpCode.attr( 'type' ) ) {
-            $otpSms.prop( 'readonly', true );
-            $otpCode.attr( 'type', 'text' ).focus();
-            $( '<div class="elementor-field-group"></div>' ).insertAfter( $otpSms );
+            $otpSms.attr( 'placeholder', window.elementorOtpFrontendConfig.placeholder );
+            $otpSms.attr( 'data-placeholder', $otpSms.attr( 'placeholder' ) );
+            $otpSms.val('').focus();
+        } else {
+            // $otpToken.val('');
+            $otpSms.attr( 'placeholder', $otpSms.attr( 'placeholder' ) );
         }
 
     }
@@ -27,10 +26,7 @@ jQuery( function( $ ) {
     $( 'form.elementor-form' ).ajaxSuccess( formSubmit );
 
     $( 'form.elementor-form' ).on( 'error submit_success', function( event ) {
-        var $otpCode = $( event.target ).find( '[name="otp-code"]' );
-        if ( $otpCode ) {
-            $otpCode.val('');
-        }
+
     } );
 
     $( 'form.elementor-form' ).on( 'submit_success', function( event ) {
@@ -38,11 +34,6 @@ jQuery( function( $ ) {
         if ( $otpSms ) {
             $otpSms.prop( 'readonly', false );
             $otpSms.siblings( '.elementor-field-group' ).remove();
-        }
-
-        var $otpCode = $( event.target ).find( '[name="otp-code"]' );
-        if ( $otpCode ) {
-            $otpCode.attr( 'type', 'hidden' );
         }
 
         var $otpToken = $( event.target ).find( '[name="otp-token"]' );

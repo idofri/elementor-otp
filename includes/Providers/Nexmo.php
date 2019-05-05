@@ -75,10 +75,9 @@ class Nexmo extends Base {
         $message = __( 'Awaiting verification.', 'elementor-otp' );
 
         // Check verification code
-        if ( ! empty( $_POST['otp-code'] ) && ! empty( $_POST['otp-token'] ) ) {
+        if ( ! empty( $_POST['otp-token'] ) ) {
             $request_id = sanitize_text_field( $_POST['otp-token'] );
-            $code = sanitize_text_field( $_POST['otp-code'] );
-            $this->verify( $request_id, $code );
+            $this->verify( $request_id, $field['value'] );
             if ( $this->hasErrors() ) {
                 $message = $this->getErrorMessage();
             } else {
