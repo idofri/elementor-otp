@@ -18,7 +18,7 @@ jQuery( function( $ ) {
             $otpSms.val('').focus();
         } else {
             // $otpToken.val('');
-            $otpSms.attr( 'placeholder', $otpSms.attr( 'placeholder' ) );
+            $otpSms.attr( 'placeholder', $otpSms.attr( 'data-placeholder' ) );
         }
 
     }
